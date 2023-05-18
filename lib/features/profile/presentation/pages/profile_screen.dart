@@ -1,10 +1,10 @@
-import 'package:booking_app/core/config/app_colors.dart';
-import 'package:booking_app/core/config/app_text_styles.dart';
-import 'package:booking_app/core/constant/svg_paths.dart';
-import 'package:booking_app/core/presentation/widgets/network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:booking_app/core/flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../../../core/config/app_colors.dart';
+import '../../../../core/config/app_text_styles.dart';
+import '../../../../core/constant/svg_paths.dart';
+import '../../../../core/presentation/widgets/network_image.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const String routeName = "profile_screen";
@@ -43,7 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       shape: BoxShape.circle,
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Text(
                     "Jane Doe",
                     style: AppTextStyles.styleWeight900(

@@ -1,9 +1,8 @@
-import 'package:booking_app/core/constant/svg_paths.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/config/app_colors.dart';
+import '../../../../core/flutter_neumorphic/flutter_neumorphic.dart';
 
 class MainBottomNavigationBar extends StatelessWidget {
   const MainBottomNavigationBar({
