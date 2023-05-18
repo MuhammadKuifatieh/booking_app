@@ -1,14 +1,11 @@
-import 'dart:math';
-
-import 'package:booking_app/features/main/presentation/pages/main_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/config/app_colors.dart';
 import '../../../../core/config/app_text_styles.dart';
-import '../../../../core/presentation/widgets/gradian_text.dart';
+import '../../../../core/extensions/gradian.dart';
 import '../../../../core/presentation/widgets/main_button.dart';
 import '../../../../core/presentation/widgets/main_button_with_border.dart';
 import '../../../../core/presentation/widgets/main_text_failed.dart';
+import '../../../main/presentation/pages/main_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const String routeName = "register_screen";
@@ -51,13 +48,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
           SizedBox(
             height: size.height * .1,
           ),
-          GradientText(
+          Text(
             "Register",
             style: AppTextStyles.styleWeight900(
               fontSize: size.width * .125,
             ).copyWith(letterSpacing: 0),
-            gradient: AppColors.mainGradent,
-          ),
+          ).gradient(),
           SizedBox(
             height: size.height * .05,
           ),

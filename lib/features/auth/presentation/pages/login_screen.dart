@@ -1,14 +1,12 @@
-import 'package:booking_app/features/auth/presentation/pages/register_screen.dart';
-import 'package:booking_app/features/main/presentation/pages/main_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-import '../../../../core/config/app_colors.dart';
 import '../../../../core/config/app_text_styles.dart';
-import '../../../../core/presentation/widgets/gradian_text.dart';
+import '../../../../core/extensions/gradian.dart';
 import '../../../../core/presentation/widgets/main_button.dart';
 import '../../../../core/presentation/widgets/main_button_with_border.dart';
 import '../../../../core/presentation/widgets/main_text_failed.dart';
+import '../../../main/presentation/pages/main_screen.dart';
+import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = "login_screen";
@@ -44,13 +42,12 @@ class _LoginScreenState extends State<LoginScreen> {
           SizedBox(
             height: size.height * .15,
           ),
-          GradientText(
+          Text(
             "Login",
             style: AppTextStyles.styleWeight900(
               fontSize: size.width * .125,
             ).copyWith(letterSpacing: 0),
-            gradient: AppColors.mainGradent,
-          ),
+          ).gradient(),
           SizedBox(
             height: size.height * .05,
           ),
