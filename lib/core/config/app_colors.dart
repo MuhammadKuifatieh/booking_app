@@ -11,7 +11,7 @@ class AppColors {
   static const Color orangeGradientStart = Color(0xFFFF6161);
   static const Color orangeGradientEnd = Color(0xFFFF61DC);
   static const Color orangeDarkGradientStart = Color(0xFFFFC7A7);
-  static const Color orangeDarkGradientend = Color(0xFFFFD579);
+  static const Color orangeDarkGradientEnd = Color(0xFFFFD579);
 
   static const LinearGradient mainGradent = LinearGradient(
     colors: [

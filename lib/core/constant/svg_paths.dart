@@ -11,4 +11,6 @@ class SvgPaths {
   static const setting = "$_mainPath/setting.svg";
   static const favorite = "$_mainPath/favorite.svg";
   static const filter = "$_mainPath/filter.svg";
+  static const back = "$_mainPath/back.svg";
+  static const creditCard = "$_mainPath/credit_card.svg";
 }
