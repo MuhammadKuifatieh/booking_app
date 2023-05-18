@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:booking_app/core/config/app_colors.dart';
 import 'package:booking_app/core/config/app_text_styles.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:booking_app/core/flutter_neumorphic/flutter_neumorphic.dart';
 
 class MainTextFailed extends StatelessWidget {
   final String? hint;
@@ -13,6 +13,7 @@ class MainTextFailed extends StatelessWidget {
   final Function(String)? onChanged;
   final int? maxLines;
   final double titleFontSize;
+  final bool enabled;
 
   const MainTextFailed({
     Key? key,
@@ -24,20 +25,20 @@ class MainTextFailed extends StatelessWidget {
     this.initialValue,
     this.onChanged,
     this.maxLines,
-    this.titleFontSize = 12,
+    this.titleFontSize = 16,
+    this.enabled = true,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Neumorphic(
-      style:  NeumorphicStyle(
-        depth: -10,
-        shape: NeumorphicShape.convex,
-        shadowLightColor: Colors.black,
-        shadowDarkColor: Colors.black,
-        boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(25)),
-        color: AppColors.offWhite,
-        lightSource: LightSource.bottom
-      ),
+      style: NeumorphicStyle(
+          depth: -10,
+          shape: NeumorphicShape.convex,
+          shadowLightColor: Colors.black,
+          shadowDarkColor: Colors.black,
+          boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(25)),
+          color: AppColors.offWhite,
+          lightSource: LightSource.bottom),
       margin: const EdgeInsets.all(8.0),
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: TextFormField(
@@ -56,6 +57,7 @@ class MainTextFailed extends StatelessWidget {
           labelStyle: const TextStyle(fontSize: 20),
           filled: true,
           fillColor: Colors.transparent,
+          enabled: enabled,
           prefixIcon: icon == null
               ? null
               : Icon(

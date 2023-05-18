@@ -1,4 +1,4 @@
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:booking_app/core/flutter_neumorphic/flutter_neumorphic.dart';
 
 import '../../config/app_colors.dart';
 import '../../config/app_text_styles.dart';
@@ -9,7 +9,11 @@ class MainButton extends StatelessWidget {
     required this.size,
     required this.text,
     required this.onPressed,
+    this.width,
+    this.height,
   });
+  final double? width;
+  final double? height;
   final Size size;
   final String text;
   final VoidCallback onPressed;
@@ -26,8 +30,8 @@ class MainButton extends StatelessWidget {
       ),
       padding: EdgeInsets.zero,
       child: Container(
-        width: size.width * .5,
-        height: size.width * .12,
+        width: width ?? size.width * .5,
+        height: height ?? size.width * .12,
         decoration: BoxDecoration(
           gradient: AppColors.mainGradent,
           borderRadius: BorderRadius.circular(25),
@@ -37,7 +41,7 @@ class MainButton extends StatelessWidget {
             text,
             style: AppTextStyles.styleWeight600(
               fontSize: size.width * .045,
-              color: AppColors.backgroundColor,
+              color: AppColors.offWhite,
             ),
           ),
         ),

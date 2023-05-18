@@ -1,8 +1,7 @@
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-
 import '../../config/app_colors.dart';
 import '../../config/app_text_styles.dart';
-import 'gradian_text.dart';
+import '../../extensions/gradian.dart';
+import '../../flutter_neumorphic/flutter_neumorphic.dart';
 
 class MainButtonWithBorder extends StatelessWidget {
   const MainButtonWithBorder({
@@ -10,7 +9,11 @@ class MainButtonWithBorder extends StatelessWidget {
     required this.size,
     required this.text,
     required this.onPressed,
+    this.width,
+    this.height,
   });
+  final double? width;
+  final double? height;
   final Size size;
   final String text;
   final VoidCallback onPressed;
@@ -33,21 +36,20 @@ class MainButtonWithBorder extends StatelessWidget {
         ),
         child: Container(
           margin: const EdgeInsets.all(1.5),
-          width: size.width * .5,
-          height: size.width * .12,
+          width: width ?? size.width * .5,
+          height: height ?? size.width * .12,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),
             color: AppColors.backgroundColor,
           ),
           child: Center(
-            child: GradientText(
+            child: Text(
               text,
               style: AppTextStyles.styleWeight600(
                 fontSize: size.width * .045,
                 color: AppColors.backgroundColor,
               ),
-              gradient: AppColors.mainGradent,
-            ),
+            ).gradient(),
           ),
         ),
       ),

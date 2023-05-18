@@ -83,6 +83,7 @@ class CacheImage extends StatelessWidget {
               child: child,
             );
           case LoadState.failed:
+          default:
             return GestureDetector(
               onTap: () {
                 state.reLoadImage();
@@ -120,8 +121,6 @@ class CacheImage extends StatelessWidget {
                 ],
               ),
             );
-
-          default:
         }
       },
     );
