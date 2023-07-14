@@ -13,6 +13,7 @@ import '../features/hotel/presentation/pages/room_screen.dart';
 import '../features/main/presentation/pages/main_screen.dart';
 import '../features/notifcation/presentation/pages/notificaton_screen.dart';
 import '../features/profile/presentation/pages/profile_screen.dart';
+import '../features/resturant/presentation/pages/restaurant_details_screen.dart';
 import '../features/resturant/presentation/pages/resturant_screen.dart';
 import '../features/search/presentation/pages/search_screen.dart';
 import '../features/trip/presentation/pages/trip_screen.dart';
@@ -74,6 +75,10 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => const ResturantScreen(),
           settings: routeSettings,
+        );
+      case RestaurantDetailsScreen.routeName:
+        return MaterialPageRoute(
+          builder: (_) => const RestaurantDetailsScreen(),
         );
       case TripScreen.routeName:
         return MaterialPageRoute(

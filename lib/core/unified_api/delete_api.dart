@@ -16,8 +16,8 @@ class DeleteApi<T> with HandlingExceptionRequest {
     required this.fromJson,
   });
   Future<T> callRequest() async {
-    String? token = await GlobalFunctions().getToken();
-    bool isAuth = await GlobalFunctions().isAuth();
+    String? token = await GlobalFunctions.getToken();
+    bool isAuth = await GlobalFunctions.isAuth();
     try {
       Map<String, String> headers = {
         'Content-Type': 'application/json',

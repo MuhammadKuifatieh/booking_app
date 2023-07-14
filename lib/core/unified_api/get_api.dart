@@ -22,8 +22,8 @@ class GetApi<T> with HandlingExceptionRequest {
     this.getFCMToken = false,
   });
   Future<T> callRequest() async {
-    String? token = await GlobalFunctions().getToken();
-    bool isAuth = await GlobalFunctions().isAuth();
+    String? token = await GlobalFunctions.getToken();
+    bool isAuth = await GlobalFunctions.isAuth();
     String? deviceId = "";
 
     try {

@@ -1,14 +1,15 @@
-import 'package:animated_digit/animated_digit.dart';
-import 'package:booking_app/core/presentation/widgets/main_button_with_border.dart';
+import 'package:booking_app/core/presentation/pages/paymant_screen.dart';
+import 'package:booking_app/features/clinic/presentation/pages/clinic_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/config/app_colors.dart';
 import '../../../../core/config/app_text_styles.dart';
-import '../widgets/calender.dart';
 import '../../../../core/presentation/widgets/main_app_bar.dart';
 import '../../../../core/presentation/widgets/main_button.dart';
+import '../../../../core/presentation/widgets/main_button_with_border.dart';
 import '../../../../core/presentation/widgets/network_image.dart';
 import '../../../../core/presentation/widgets/ratting_card.dart';
+import '../widgets/calender.dart';
 
 class ClinicDetailsScreen extends StatefulWidget {
   static const String routeName = "clinic_details";
@@ -243,6 +244,8 @@ onvallis a pellentesque nec, egestas non""",
                     showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      constraints: BoxConstraints(maxHeight: size.height * .8),
                       builder: (_) => NewWidget(
                         size: size,
                       ),
@@ -258,50 +261,6 @@ onvallis a pellentesque nec, egestas non""",
   }
 }
 
-class AnimatedCount extends ImplicitlyAnimatedWidget {
-  const AnimatedCount({
-    Key? key,
-    required this.count,
-    Duration duration = const Duration(milliseconds: 600),
-    Curve curve = Curves.fastOutSlowIn,
-  }) : super(duration: duration, curve: curve, key: key);
-
-  final int count;
-
-  @override
-  ImplicitlyAnimatedWidgetState<ImplicitlyAnimatedWidget> createState() {
-    return _AnimatedCountState();
-  }
-}
-
-class _AnimatedCountState extends AnimatedWidgetBaseState<AnimatedCount> {
-  late IntTween _intCount;
-  @override
-  void initState() {
-    _intCount = IntTween(begin: widget.count, end: widget.count);
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      _intCount.evaluate(animation).toString().padLeft(2, "0"),
-      style: AppTextStyles.styleWeight700(
-        fontSize: MediaQuery.of(context).size.width * .05,
-      ),
-    );
-  }
-
-  @override
-  void forEachTween(TweenVisitor<dynamic> visitor) {
-    _intCount = visitor(
-      _intCount,
-      widget.count,
-      (dynamic value) => IntTween(begin: value),
-    ) as IntTween;
-  }
-}
-
 class NewWidget extends StatelessWidget {
   NewWidget({
     super.key,
@@ -314,44 +273,132 @@ class NewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        color: AppColors.backgroundColor,
+      ),
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(24.0),
+          const Padding(
+            padding: EdgeInsets.all(24.0),
             child: CalendarWidget(),
           ),
-          MainButtonWithBorder(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                children: [
+                  Text(
+                    "Hours",
+                    style: AppTextStyles.styleWeight900(
+                      fontSize: size.width * .05,
+                    ),
+                  ),
+                  MainButtonWithBorder(
+                    size: size,
+                    width: size.width * .1,
+                    height: size.width * .1,
+                    text: "+",
+                    onPressed: () {
+                      if (hours.value < 23) {
+                        hours.value += 30;
+                      } else {
+                        hours.value = 0;
+                      }
+                    },
+                  ),
+                  ValueListenableBuilder<int>(
+                    valueListenable: hours,
+                    builder: (context, value, _) {
+                      return Text(
+                        "$value".padLeft(2, "0"),
+                        style: AppTextStyles.styleWeight900(
+                            fontSize: size.width * .06),
+                      );
+                    },
+                  ),
+                  MainButtonWithBorder(
+                    size: size,
+                    width: size.width * .1,
+                    height: size.width * .1,
+                    text: "-",
+                    onPressed: () {
+                      if (hours.value > 0) {
+                        hours.value--;
+                      } else {
+                        hours.value = 23;
+                      }
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(width: 20),
+              Column(
+                children: [
+                  Text(
+                    "Minutes",
+                    style: AppTextStyles.styleWeight900(
+                      fontSize: size.width * .05,
+                    ),
+                  ),
+                  MainButtonWithBorder(
+                    size: size,
+                    width: size.width * .1,
+                    height: size.width * .1,
+                    text: "+",
+                    onPressed: () {
+                      if (minute.value < 45) {
+                        minute.value += 15;
+                      } else {
+                        minute.value = 0;
+                      }
+                    },
+                  ),
+                  ValueListenableBuilder<int>(
+                    valueListenable: minute,
+                    builder: (context, value, _) {
+                      return Text(
+                        "$value".padLeft(2, "0"),
+                        style: AppTextStyles.styleWeight900(
+                            fontSize: size.width * .06),
+                      );
+                    },
+                  ),
+                  MainButtonWithBorder(
+                    size: size,
+                    width: size.width * .1,
+                    height: size.width * .1,
+                    text: "-",
+                    onPressed: () {
+                      if (minute.value > 0) {
+                        minute.value -= 15;
+                      } else {
+                        minute.value = 45;
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+          const Spacer(),
+          MainButton(
             size: size,
-            width: size.width * .15,
-            height: size.width * .1,
-            text: "+",
+            width: size.width*.8,
+            height: size.width*.15,
+            text: "Confirm Booking",
             onPressed: () {
-              if (hours.value < 23) {
-                hours.value++;
-              } else {
-                hours.value = 0;
-              }
+              Navigator.of(context).pushNamed(PaymentScreen.routeName,
+                  arguments: PaymentScreenParams(
+                onTapConfirm: () {
+                  Navigator.of(context).popUntil(
+                    (route) => route.settings.name == ClinicScreen.routeName,
+                  );
+                },
+              ));
             },
           ),
-          ValueListenableBuilder<int>(
-            valueListenable: hours,
-            builder: (context, value, _) {
-              return AnimatedCount(count: value);
-            },
-          ),
-          MainButtonWithBorder(
-            size: size,
-            width: size.width * .15,
-            height: size.width * .07,
-            text: "-",
-            onPressed: () {
-              if (hours.value >0) {
-                hours.value--;
-              } else {
-                hours.value = 23;
-              }
-            },
-          ),
+          const SizedBox(height: 25)
         ],
       ),
     );

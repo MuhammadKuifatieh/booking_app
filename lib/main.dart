@@ -1,4 +1,5 @@
 import 'package:booking_app/core/config/app_them.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 
 import 'features/auth/presentation/pages/login_screen.dart';
@@ -16,6 +17,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Booking App',
       theme: AppTheme.getColor(),
+      builder: BotToastInit(),
+      navigatorObservers: [BotToastNavigatorObserver()],
       home: const LoginScreen(),
       onGenerateRoute: AppRouter.onGenerateRoute,
     );

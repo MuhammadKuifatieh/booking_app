@@ -1,3 +1,4 @@
+import 'package:booking_app/features/resturant/presentation/widgets/resturant_card.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/presentation/widgets/main_app_bar.dart';
@@ -24,6 +25,11 @@ class _ResturantScreenState extends State<ResturantScreen> {
       appBar: MainAppBar(
         size: size,
         title: "Resturants",
+      ),
+      body: ListView.builder(
+        itemBuilder: (context, index) {
+          return RestaurantCard(size: size);
+        },
       ),
     );
   }

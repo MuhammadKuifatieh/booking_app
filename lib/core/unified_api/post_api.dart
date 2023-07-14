@@ -25,9 +25,9 @@ class PostApi<T> with HandlingExceptionRequest {
   });
 
   Future<T> callRequest() async {
-    String? token = await GlobalFunctions().getToken();
+    String? token = await GlobalFunctions.getToken();
 
-    bool isAuth = await GlobalFunctions().isAuth();
+    bool isAuth = await GlobalFunctions.isAuth();
 
     log('the token in the request header is $token',
         name: 'request manager ==> post function ');
