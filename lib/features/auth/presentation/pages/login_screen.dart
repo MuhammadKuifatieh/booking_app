@@ -7,7 +7,7 @@ import '../../../../core/extensions/gradian.dart';
 import '../../../../core/presentation/widgets/main_button.dart';
 import '../../../../core/presentation/widgets/main_button_with_border.dart';
 import '../../../../core/presentation/widgets/main_text_failed.dart';
-import '../../../main/presentation/pages/main_screen.dart';
+import '../../../splash/presentation/pages/splash_screen.dart';
 import '../../domain/usecases/login.dart';
 import '../bloc/login/login_bloc.dart';
 import 'register_screen.dart';
@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Toast.showText(text: "something wrong");
             } else if (state.loginStatus == LoginStatus.succ) {
               Toast.closeAllLoading();
-              Navigator.of(context).pushNamed(MainScreen.routeName);
+              Navigator.of(context).pushNamed(SplashScreen.routeName);
             }
           },
           builder: (context, state) {

@@ -1,13 +1,13 @@
-import 'package:booking_app/core/config/toast.dart';
-import 'package:booking_app/features/main/presentation/pages/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/config/app_text_styles.dart';
+import '../../../../core/config/toast.dart';
 import '../../../../core/extensions/gradian.dart';
 import '../../../../core/presentation/widgets/main_button.dart';
 import '../../../../core/presentation/widgets/main_button_with_border.dart';
 import '../../../../core/presentation/widgets/main_text_failed.dart';
+import '../../../splash/presentation/pages/splash_screen.dart';
 import '../../domain/usecases/register.dart';
 import '../bloc/register/register_bloc.dart';
 
@@ -61,7 +61,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Toast.showText(text: "something wrong");
             } else if (state.registerStatus == RegisterStatus.succ) {
               Toast.closeAllLoading();
-              Navigator.of(context).pushNamed(MainScreen.routeName);
+              Navigator.of(context).pushNamed(SplashScreen.routeName);
             }
           },
           builder: (context, state) {

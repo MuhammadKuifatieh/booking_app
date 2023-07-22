@@ -13,9 +13,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final _register = Register(AuthRepositoryImplement());
 
   RegisterBloc() : super(const RegisterState()) {
-    on<RegisterEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<GetRegisterEvent>(_mapRegisterState);
   }
   FutureOr<void> _mapRegisterState(
       GetRegisterEvent event, Emitter<RegisterState> emit) async {

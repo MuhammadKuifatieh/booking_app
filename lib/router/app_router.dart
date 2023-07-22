@@ -16,11 +16,16 @@ import '../features/profile/presentation/pages/profile_screen.dart';
 import '../features/resturant/presentation/pages/restaurant_details_screen.dart';
 import '../features/resturant/presentation/pages/resturant_screen.dart';
 import '../features/search/presentation/pages/search_screen.dart';
+import '../features/splash/presentation/pages/splash_screen.dart';
 import '../features/trip/presentation/pages/trip_screen.dart';
 
 class AppRouter {
   static Route<dynamic>? onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
+      case SplashScreen.routeName:
+        return MaterialPageRoute(
+          builder: (_) => const SplashScreen(),
+        );
       case LoginScreen.routeName:
         return MaterialPageRoute(
           builder: (_) => const LoginScreen(),
