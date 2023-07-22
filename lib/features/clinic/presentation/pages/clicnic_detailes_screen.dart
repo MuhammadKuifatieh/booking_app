@@ -1,15 +1,15 @@
-import 'package:booking_app/core/presentation/pages/paymant_screen.dart';
-import 'package:booking_app/features/clinic/presentation/pages/clinic_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/config/app_colors.dart';
 import '../../../../core/config/app_text_styles.dart';
+import '../../../../core/presentation/pages/paymant_screen.dart';
 import '../../../../core/presentation/widgets/main_app_bar.dart';
 import '../../../../core/presentation/widgets/main_button.dart';
 import '../../../../core/presentation/widgets/main_button_with_border.dart';
 import '../../../../core/presentation/widgets/network_image.dart';
 import '../../../../core/presentation/widgets/ratting_card.dart';
 import '../widgets/calender.dart';
+import 'clinic_screen.dart';
 
 class ClinicDetailsScreen extends StatefulWidget {
   static const String routeName = "clinic_details";
@@ -27,7 +27,7 @@ class _ClinicDetailsScreenState extends State<ClinicDetailsScreen> {
     super.didChangeDependencies();
   }
 
-  List<String> OpenDays = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+  List<String> openDays = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -197,7 +197,7 @@ onvallis a pellentesque nec, egestas non""",
                 ),
                 const SizedBox(height: 5),
                 Wrap(
-                  children: OpenDays.map(
+                  children: openDays.map(
                     (day) => Container(
                       margin: const EdgeInsets.only(right: 5, bottom: 5),
                       width: size.width * .11,

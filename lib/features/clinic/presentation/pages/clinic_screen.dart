@@ -44,7 +44,7 @@ class _ClinicScreenState extends State<ClinicScreen> {
               builder: (context, value, _) {
                 return Expanded(
                   child: ListView.builder(
-                    padding: EdgeInsets.only(top: 25),
+                    padding: const EdgeInsets.only(top: 25),
                     scrollDirection: Axis.horizontal,
                     itemCount: types.length,
                     itemBuilder: (context, index) {
