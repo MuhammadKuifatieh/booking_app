@@ -65,91 +65,93 @@ class _RegisterScreenState extends State<RegisterScreen> {
             }
           },
           builder: (context, state) {
-            return Form(
-              key: _formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
-                    height: size.height * .1,
-                  ),
-                  Text(
-                    "Register",
-                    style: AppTextStyles.styleWeight900(
-                      fontSize: size.width * .125,
-                    ).copyWith(letterSpacing: 0),
-                  ).gradient(),
-                  SizedBox(
-                    height: size.height * .05,
-                  ),
-                  MainTextFailed(
-                    hint: "Full Name",
-                    controller: fullNameController,
-                    validator: (text) => text == null || text.isEmpty
-                        ? "fullname is short"
-                        : null,
-                  ),
-                  // MainTextFailed(
-                  //   hint: "Email",
-                  //   controller: emailController,
-                  // ),
-                  MainTextFailed(
-                    hint: "Username",
-                    controller: userNameController,
-                    validator: (text) => text == null || text.isEmpty
-                        ? "username is short"
-                        : null,
-                  ),
-                  SizedBox(
-                    height: size.height * .01,
-                  ),
-                  MainTextFailed(
-                    hint: "Password",
-                    controller: passwordController,
-                    validator: (text) => text == null || text.length < 7
-                        ? "password is short"
-                        : null,
-                  ),
-                  MainTextFailed(
-                    hint: "Confirm Password",
-                    controller: confirmPasswordController,
-                    validator: (text) => (text == null || text.length < 7) &&
-                            text == passwordController.text
-                        ? "password is short"
-                        : null,
-                  ),
-                  SizedBox(
-                    height: size.height * .05,
-                  ),
-                  MainButton(
-                    size: size,
-                    text: "Register",
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        registerBloc.add(
-                          GetRegisterEvent(
-                            RegisterParams(
-                              username: userNameController.text,
-                              name: fullNameController.text,
-                              password: passwordController.text,
-                              confirmPassword: confirmPasswordController.text,
+            return SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      height: size.height * .1,
+                    ),
+                    Text(
+                      "Register",
+                      style: AppTextStyles.styleWeight900(
+                        fontSize: size.width * .125,
+                      ).copyWith(letterSpacing: 0),
+                    ).gradient(),
+                    SizedBox(
+                      height: size.height * .05,
+                    ),
+                    MainTextFailed(
+                      hint: "Full Name",
+                      controller: fullNameController,
+                      validator: (text) => text == null || text.isEmpty
+                          ? "fullname is short"
+                          : null,
+                    ),
+                    // MainTextFailed(
+                    //   hint: "Email",
+                    //   controller: emailController,
+                    // ),
+                    MainTextFailed(
+                      hint: "Username",
+                      controller: userNameController,
+                      validator: (text) => text == null || text.isEmpty
+                          ? "username is short"
+                          : null,
+                    ),
+                    SizedBox(
+                      height: size.height * .01,
+                    ),
+                    MainTextFailed(
+                      hint: "Password",
+                      controller: passwordController,
+                      validator: (text) => text == null || text.length < 7
+                          ? "password is short"
+                          : null,
+                    ),
+                    MainTextFailed(
+                      hint: "Confirm Password",
+                      controller: confirmPasswordController,
+                      validator: (text) => (text == null || text.length < 7) &&
+                              text == passwordController.text
+                          ? "password is short"
+                          : null,
+                    ),
+                    SizedBox(
+                      height: size.height * .05,
+                    ),
+                    MainButton(
+                      size: size,
+                      text: "Register",
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          registerBloc.add(
+                            GetRegisterEvent(
+                              RegisterParams(
+                                username: userNameController.text,
+                                name: fullNameController.text,
+                                password: passwordController.text,
+                                confirmPassword: confirmPasswordController.text,
+                              ),
                             ),
-                          ),
-                        );
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: size.height * .025,
-                  ),
-                  MainButtonWithBorder(
-                    size: size,
-                    text: "Back",
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  )
-                ],
+                          );
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      height: size.height * .025,
+                    ),
+                    MainButtonWithBorder(
+                      size: size,
+                      text: "Back",
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  ],
+                ),
               ),
             );
           },

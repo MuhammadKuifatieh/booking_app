@@ -17,7 +17,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   }
   FutureOr<void> _mapRegisterState(
       GetRegisterEvent event, Emitter<RegisterState> emit) async {
-    emit(state.copyWith(registerStatus: RegisterStatus.init));
+    emit(state.copyWith(registerStatus: RegisterStatus.loading));
     final result = await _register(event.registerParams);
     result.fold(
       (l) => emit(state.copyWith(registerStatus: RegisterStatus.failed)),
