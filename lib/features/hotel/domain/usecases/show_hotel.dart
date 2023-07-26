@@ -1,5 +1,5 @@
 import '../../../../core/config/typedef.dart';
-import '../../../../core/usecase/usecase.dart';
+import '../../../../core/usecase/use_case.dart';
 import '../../data/models/show_hotel_response.dart';
 import '../repositories/hotel_repository.dart';
 

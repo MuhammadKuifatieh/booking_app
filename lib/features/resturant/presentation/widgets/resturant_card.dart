@@ -37,7 +37,7 @@ class RestaurantCard extends StatelessWidget {
                   borderRadius:
                       const BorderRadius.vertical(top: Radius.circular(15)),
                   imageUrl:
-                      "https://media.istockphoto.com/id/1322277517/photo/wild-grass-in-the-mountains-at-sunset.jpg?s=612x612&w=0&k=20&c=6mItwwFFGqKNKEAzv0mv6TaxhLN3zSE43bWmFN--J5w=",
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSS72fXNG6-GZcAPPh2Q8YR10zaDxbV7HGbRs8m2H8_31Ro_HOoXk3RD2VX9AoK_dS63Xs&usqp=CAU",
                 ),
                 Container(
                   width: size.width * .9,

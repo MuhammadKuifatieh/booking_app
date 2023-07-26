@@ -1,5 +1,5 @@
 import '../../../../core/config/typedef.dart';
-import '../../../../core/usecase/usecase.dart';
+import '../../../../core/usecase/use_case.dart';
 import '../../data/models/clinics_response.dart';
 import '../repositories/clinic_repository.dart';
 

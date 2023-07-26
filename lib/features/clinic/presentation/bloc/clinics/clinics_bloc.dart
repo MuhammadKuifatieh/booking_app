@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 
-import '../../../../../core/usecase/usecase.dart';
+import '../../../../../core/usecase/use_case.dart';
 import '../../../data/models/clinic_specialization_response.dart';
 import '../../../data/models/clinics_response.dart';
 import '../../../data/repositories/clinic_repository_implement.dart';

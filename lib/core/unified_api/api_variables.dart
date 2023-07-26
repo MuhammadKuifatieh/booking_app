@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:booking_app/core/config/typedef.dart';
+import '../config/typedef.dart';
 
 class ApiVariables {
   /////////////
@@ -75,12 +75,30 @@ class ApiVariables {
         path: "clinic/$path",
         queryParameters: params,
       );
-  static Uri getclinicSpecialization() => _clinc(path: "clinic");
+  static Uri getclinicSpecialization() => _clinc(path: "specialization");
 
   static Uri getClinics(QueryParams params) => _userUri(
         path: "clinic",
         queryParameters: params,
       );
 
-  static Uri showClinic(int clinicId) => _clinc(path: "/$clinicId");
+  static Uri showClinic(int clinicId) => _clinc(path: "$clinicId");
+  ////////////////
+  ///restaurant///
+  ///////////////
+
+  static Uri _restaurant({required String path, QueryParams? params}) =>
+      _userUri(
+        path: "restaurant/$path",
+        queryParameters: params,
+      );
+
+  static Uri getRestaurants({QueryParams? params}) => _userUri(
+        path: "restaurant",
+        queryParameters: params,
+      );
+
+  static Uri showRestuarant({required int restaurantId}) => _restaurant(
+        path: "$restaurantId",
+      );
 }

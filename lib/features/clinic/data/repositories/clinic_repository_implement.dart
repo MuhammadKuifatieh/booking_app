@@ -6,9 +6,7 @@ import '../models/clinic_specialization_response.dart';
 import '../models/clinics_response.dart';
 import '../models/show_clinic_respnse.dart';
 
-class ClinicRepositoryImplement
-    with HandlingExceptionManager
-    implements ClinicRepository {
+class ClinicRepositoryImplement with HandlingExceptionManager implements ClinicRepository {
   final _remoteClinic = RemoteClinicDataSource();
   @override
   DataResponse<ClinicSpecializationResponse> getClinicSpecialization() async {

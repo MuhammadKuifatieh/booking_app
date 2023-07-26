@@ -79,7 +79,7 @@ class _ClinicDetailsScreenState extends State<ClinicDetailsScreen> {
                         height: size.width * .2,
                         shape: BoxShape.circle,
                         imageUrl:
-                            "https://cdn.sanity.io/images/0vv8moc6/diag_imaging/299673abf1f3d5e6c1e45cf05eff17274c935008-940x788.png?fit=crop&auto=format",
+                            "https://media.istockphoto.com/id/138205019/photo/happy-healthcare-practitioner.jpg?s=612x612&w=0&k=20&c=b8kUyVtmZeW8MeLHcDsJfqqF0XiFBjq6tgBQZC7G0f0=",
                       ),
                     ],
                   ),
@@ -197,26 +197,28 @@ onvallis a pellentesque nec, egestas non""",
                 ),
                 const SizedBox(height: 5),
                 Wrap(
-                  children: openDays.map(
-                    (day) => Container(
-                      margin: const EdgeInsets.only(right: 5, bottom: 5),
-                      width: size.width * .11,
-                      height: size.width * .11,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: AppColors.mainGradent,
-                      ),
-                      child: Center(
-                        child: Text(
-                          day,
-                          style: AppTextStyles.styleWeight900(
-                            color: AppColors.offWhite,
-                            fontSize: size.width * .035,
+                  children: openDays
+                      .map(
+                        (day) => Container(
+                          margin: const EdgeInsets.only(right: 5, bottom: 5),
+                          width: size.width * .11,
+                          height: size.width * .11,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: AppColors.mainGradent,
+                          ),
+                          child: Center(
+                            child: Text(
+                              day,
+                              style: AppTextStyles.styleWeight900(
+                                color: AppColors.offWhite,
+                                fontSize: size.width * .035,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                  ).toList(),
+                      )
+                      .toList(),
                 ),
                 const SizedBox(height: 10),
                 Row(
@@ -384,8 +386,8 @@ class NewWidget extends StatelessWidget {
           const Spacer(),
           MainButton(
             size: size,
-            width: size.width*.8,
-            height: size.width*.15,
+            width: size.width * .8,
+            height: size.width * .15,
             text: "Confirm Booking",
             onPressed: () {
               Navigator.of(context).pushNamed(PaymentScreen.routeName,

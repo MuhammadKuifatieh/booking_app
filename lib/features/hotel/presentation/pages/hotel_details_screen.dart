@@ -35,7 +35,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                   width: size.width,
                   height: size.width * .6666,
                   imageUrl:
-                      "https://media.istockphoto.com/id/1322277517/photo/wild-grass-in-the-mountains-at-sunset.jpg?s=612x612&w=0&k=20&c=6mItwwFFGqKNKEAzv0mv6TaxhLN3zSE43bWmFN--J5w=",
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6TDTZSs8CSIVCgBSw2Pb3HFkREHnPOuG2w4jWXevThGVynZiTA2quQXyvj4eAIEM_FcE&usqp=CAU",
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(

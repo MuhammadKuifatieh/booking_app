@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 
 import '../../../../core/config/global_functions.dart';
-import '../../../../core/usecase/usecase.dart';
+import '../../../../core/usecase/use_case.dart';
 import '../../data/models/cities_response.dart';
 import '../../data/repositories/citiy_repositories_implement.dart';
 import '../../domain/usecases/get_cities.dart';
@@ -22,6 +22,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
       CheckAuthEvent event, Emitter<SplashState> emit) async {
     if (await GlobalFunctions.isAuth()) {
       emit(state.copyWith(authStatus: AuthStatus.auth));
+    
       add(const GetCitiesEvent());
     } else {
       emit(state.copyWith(authStatus: AuthStatus.unAuth));

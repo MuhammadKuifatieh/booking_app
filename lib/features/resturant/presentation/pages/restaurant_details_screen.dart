@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/config/app_colors.dart';
 import '../../../../core/config/app_text_styles.dart';
 import '../../../../core/constant/svg_paths.dart';
+import '../../../../core/flutter_neumorphic/flutter_neumorphic.dart';
 import '../../../../core/presentation/widgets/main_button.dart';
 import '../../../../core/presentation/widgets/network_image.dart';
-import '../../../hotel/presentation/pages/room_screen.dart';
+import '../widgets/bookin_table_bottom_sheet.dart';
 
 class RestaurantDetailsScreen extends StatefulWidget {
   static const String routeName = "restaurant_details_screen";
@@ -38,7 +38,7 @@ class _RestaurantDetailsScreenState extends State<RestaurantDetailsScreen> {
                   width: size.width,
                   height: size.width * .6666,
                   imageUrl:
-                      "https://media.istockphoto.com/id/1322277517/photo/wild-grass-in-the-mountains-at-sunset.jpg?s=612x612&w=0&k=20&c=6mItwwFFGqKNKEAzv0mv6TaxhLN3zSE43bWmFN--J5w=",
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSS72fXNG6-GZcAPPh2Q8YR10zaDxbV7HGbRs8m2H8_31Ro_HOoXk3RD2VX9AoK_dS63Xs&usqp=CAU",
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(
@@ -139,12 +139,16 @@ class _RestaurantDetailsScreenState extends State<RestaurantDetailsScreen> {
         size: size,
         width: size.width * .8,
         height: size.width * .15,
-        text: "Select Room",
+        text: "Select Table Type",
         onPressed: () {
-          Navigator.of(context).pushNamed(RoomScreen.routeName);
+          showModalBottomSheet(
+            context: context,
+            builder: (_) => BookingTableBottomSheet(size: size),
+          );
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
+

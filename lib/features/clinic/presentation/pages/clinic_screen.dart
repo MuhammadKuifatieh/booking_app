@@ -131,7 +131,7 @@ class ClinicCard extends StatelessWidget {
                     left: Radius.circular(25),
                   ),
                   imageUrl:
-                      "https://cdn.sanity.io/images/0vv8moc6/diag_imaging/299673abf1f3d5e6c1e45cf05eff17274c935008-940x788.png?fit=crop&auto=format",
+                      "https://media.istockphoto.com/id/138205019/photo/happy-healthcare-practitioner.jpg?s=612x612&w=0&k=20&c=b8kUyVtmZeW8MeLHcDsJfqqF0XiFBjq6tgBQZC7G0f0=",
                 ),
                 Padding(
                   padding: const EdgeInsets.all(4.0),
