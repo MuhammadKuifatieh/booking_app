@@ -4,4 +4,11 @@
          to allow setting breakpoints, to provide hot reload, etc.
     -->
     <uses-permission android:name="android.permission.INTERNET"/>
+     <application
+        android:label="booking_app"
+        android:name="${applicationName}"
+        android:icon="@mipmap/ic_launcher">
+          <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyCZnBHYhGaXTwNdPjuz5ZzgJKVPiKzR0GE"/>
+    </application>
 </manifest>

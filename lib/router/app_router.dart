@@ -1,3 +1,4 @@
+import 'package:booking_app/features/search/presentation/pages/show_location_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../core/presentation/pages/paymant_screen.dart';
@@ -29,6 +30,13 @@ class AppRouter {
       case LoginScreen.routeName:
         return MaterialPageRoute(
           builder: (_) => const LoginScreen(),
+          settings: routeSettings,
+        );
+      case ShowLocationScreen.routeName:
+        return MaterialPageRoute(
+          builder: (_) => ShowLocationScreen(
+            arg: routeSettings.arguments as ShowLocationScreenParams,
+          ),
           settings: routeSettings,
         );
       case RegisterScreen.routeName:

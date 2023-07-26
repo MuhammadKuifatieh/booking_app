@@ -1,4 +1,6 @@
+import 'package:booking_app/features/search/presentation/pages/show_location_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../core/config/app_colors.dart';
 import '../../../../core/config/app_text_styles.dart';
@@ -87,7 +89,22 @@ class _SearchScreenState extends State<SearchScreen> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          // showBottomSheet(
+                          //   context: context,
+                          //   builder: (_) => ShowLocationScreen(
+                          //     arg: ShowLocationScreenParams(
+                          //       location: const LatLng(35, 38),
+                          //     ),
+                          //   ),
+                          // );
+                          Navigator.of(context).pushNamed(
+                            ShowLocationScreen.routeName,
+                            arguments: ShowLocationScreenParams(
+                              location: const LatLng(35, 38),
+                            ),
+                          );
+                        },
                         child: Text(
                           "Map",
                           style: AppTextStyles.styleWeight500(
@@ -203,4 +220,3 @@ class NewWidget extends StatelessWidget {
     );
   }
 }
-
