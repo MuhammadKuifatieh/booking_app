@@ -2,7 +2,7 @@ part of 'splash_bloc.dart';
 
 enum GetCitiesStatus { init, loading, succ, failed }
 
-enum AuthStatus { init, auth, unAuth }
+enum AuthStatus { init, auth, unAuth, isFirstOpen }
 
 class SplashState {
   final List<CityModel> cities;

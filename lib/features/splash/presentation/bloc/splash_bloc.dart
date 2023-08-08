@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 
 import '../../../../core/config/global_functions.dart';
+import '../../../../core/models/city_model.dart';
 import '../../../../core/usecase/use_case.dart';
-import '../../data/models/cities_response.dart';
 import '../../data/repositories/citiy_repositories_implement.dart';
 import '../../domain/usecases/get_cities.dart';
 
@@ -20,9 +20,10 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
   }
   FutureOr<void> _mapCheckAuthState(
       CheckAuthEvent event, Emitter<SplashState> emit) async {
-    if (await GlobalFunctions.isAuth()) {
+    if (await GlobalFunctions.isFirstOpen()) {
+      emit(state.copyWith(authStatus: AuthStatus.isFirstOpen));
+    } else if (await GlobalFunctions.isAuth()) {
       emit(state.copyWith(authStatus: AuthStatus.auth));
-    
       add(const GetCitiesEvent());
     } else {
       emit(state.copyWith(authStatus: AuthStatus.unAuth));

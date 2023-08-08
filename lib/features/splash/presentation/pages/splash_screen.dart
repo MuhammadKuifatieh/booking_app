@@ -7,6 +7,7 @@ import '../../../../injection.dart';
 import '../../../auth/presentation/pages/login_screen.dart';
 import '../../../main/presentation/pages/main_screen.dart';
 import '../bloc/splash_bloc.dart';
+import 'on_boarder_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   static const routeName = "splash_screen";
@@ -30,7 +31,12 @@ class _SplashScreenState extends State<SplashScreen> {
       value: splashBloc,
       child: BlocConsumer<SplashBloc, SplashState>(
         listener: (context, state) {
-          if (state.authStatus == AuthStatus.unAuth) {
+          if (state.authStatus == AuthStatus.isFirstOpen) {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              OnBoarderScreen.routeName,
+              (route) => false,
+            );
+          } else if (state.authStatus == AuthStatus.unAuth) {
             Navigator.of(context).pushNamedAndRemoveUntil(
               LoginScreen.routeName,
               (route) => false,
