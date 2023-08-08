@@ -6,10 +6,15 @@ abstract class ClinicsEvent {
 
 class GetClinicSpecializationEvent extends ClinicsEvent {}
 
-class GetClinicsEvent extends ClinicsEvent {
+class GetClinicsEvent extends ClinicsEvent with EventWithReload {
+  @override
   final bool isReload;
+  final int? clinicSpecializationId;
 
-  GetClinicsEvent(this.isReload);
+  GetClinicsEvent({
+    this.isReload = false,
+    required this.clinicSpecializationId,
+  });
 }
 
 class ChangeClinicSpecializationEvent extends ClinicsEvent {

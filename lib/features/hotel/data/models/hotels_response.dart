@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'show_hotel_response.dart';
+import 'package:booking_app/core/models/hotel_model.dart';
 
 HotelsResponse hotelsResponseFromJson(String str) =>
     HotelsResponse.fromJson(json.decode(str));

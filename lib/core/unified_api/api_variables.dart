@@ -101,4 +101,26 @@ class ApiVariables {
   static Uri showRestuarant({required int restaurantId}) => _restaurant(
         path: "$restaurantId",
       );
+  ////////////////
+  ///carOffices///
+  ///////////////
+  static Uri _carOffice({required String path, QueryParams? params}) =>
+      _userUri(
+        path: "carOffice/$path",
+        queryParameters: params,
+      );
+  static Uri getCarOffices(QueryParams? params) => _userUri(
+        path: "carOffice",
+        queryParameters: params,
+      );
+  static Uri showCarOffice(int carOfficeId) => _carOffice(
+        path: "$carOfficeId",
+      );
+  //////////////
+  ///favorite///
+  /////////////
+
+  static Uri toggleFavorite(int modelId, int modelType) => _userUri(
+        path: "favorite/$modelType/model/$modelId/modelNumber/assignFavorite",
+      );
 }

@@ -7,7 +7,7 @@ import '../models/show_hotel_response.dart';
 class RemoteHotelDataSource {
   Future<HotelsResponse> getHotels(QueryParams params) async {
     final GetApi getApi = GetApi(
-      uri: ApiVariables.getHotels(),
+      uri: ApiVariables.getHotels(params: params),
       fromJson: hotelsResponseFromJson,
     );
     final result = await getApi.callRequest();

@@ -18,7 +18,7 @@ class RemoteClinicDataSource {
   Future<ClinicsResponse> getClinics(QueryParams params) async {
     final GetApi getApi = GetApi(
       uri: ApiVariables.getClinics(params),
-      fromJson: clinicSpecializationResponseFromJson,
+      fromJson: clinicsResponseFromJson,
     );
     final result = await getApi.callRequest();
     return result;

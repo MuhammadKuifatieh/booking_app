@@ -1,4 +1,5 @@
 import 'package:booking_app/features/search/presentation/pages/show_location_screen.dart';
+import 'package:booking_app/features/splash/presentation/pages/on_boarder_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../core/presentation/pages/paymant_screen.dart';
@@ -18,11 +19,15 @@ import '../features/resturant/presentation/pages/restaurant_details_screen.dart'
 import '../features/resturant/presentation/pages/resturant_screen.dart';
 import '../features/search/presentation/pages/search_screen.dart';
 import '../features/splash/presentation/pages/splash_screen.dart';
-import '../features/trip/presentation/pages/trip_screen.dart';
+import '../features/car_office/presentation/pages/car_office_screen.dart';
 
 class AppRouter {
   static Route<dynamic>? onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
+      case OnBoarderScreen.routeName:
+        return MaterialPageRoute(
+          builder: (_) => const OnBoarderScreen(),
+        );
       case SplashScreen.routeName:
         return MaterialPageRoute(
           builder: (_) => const SplashScreen(),
@@ -73,12 +78,17 @@ class AppRouter {
         );
       case HotelDetailsScreen.routeName:
         return MaterialPageRoute(
-          builder: (_) => const HotelDetailsScreen(),
+          builder: (_) => HotelDetailsScreen(
+            arg: routeSettings.arguments as HotelDetailsScreenParams,
+          ),
           settings: routeSettings,
         );
       case RoomScreen.routeName:
         return MaterialPageRoute(
-            builder: (_) => const RoomScreen(), settings: routeSettings);
+            builder: (_) => RoomScreen(
+                  arg: routeSettings.arguments as RoomScreenParams,
+                ),
+            settings: routeSettings);
       case ClinicScreen.routeName:
         return MaterialPageRoute(
           builder: (_) => const ClinicScreen(),
@@ -91,16 +101,20 @@ class AppRouter {
         );
       case RestaurantDetailsScreen.routeName:
         return MaterialPageRoute(
-          builder: (_) => const RestaurantDetailsScreen(),
+          builder: (_) => RestaurantDetailsScreen(
+            arg: routeSettings.arguments as RestaurantDetailsScreenParams,
+          ),
         );
-      case TripScreen.routeName:
+      case CarOfficeScreen.routeName:
         return MaterialPageRoute(
-          builder: (_) => const TripScreen(),
+          builder: (_) => const CarOfficeScreen(),
           settings: routeSettings,
         );
       case ClinicDetailsScreen.routeName:
         return MaterialPageRoute(
-          builder: (_) => const ClinicDetailsScreen(),
+          builder: (_) => ClinicDetailsScreen(
+            arg: routeSettings.arguments as ClinicDetailsScreenParams,
+          ),
           settings: routeSettings,
         );
       case SearchScreen.routeName:

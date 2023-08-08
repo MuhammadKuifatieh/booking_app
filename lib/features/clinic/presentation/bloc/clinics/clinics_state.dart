@@ -1,6 +1,6 @@
 part of 'clinics_bloc.dart';
 
-enum GetClinicSpecializationStatus { init, loading, failed, succ }
+enum GetClinicSpecializationStatus { init, loading, failed, succ, done }
 
 enum GetClinicsStatus { init, loading, failed, succ }
 
@@ -29,8 +29,10 @@ class ClinicsState {
       isEndPage: isEndPage ?? this.isEndPage,
       clinics: clinics ?? this.clinics,
       getClinicsStatus: getClinicsStatus ?? this.getClinicsStatus,
-      clinicSpecializations: clinicSpecializations ?? this.clinicSpecializations,
-      getClinicSpecializationStatus: getClinicSpecializationStatus ?? this.getClinicSpecializationStatus,
+      clinicSpecializations:
+          clinicSpecializations ?? this.clinicSpecializations,
+      getClinicSpecializationStatus:
+          getClinicSpecializationStatus ?? this.getClinicSpecializationStatus,
     );
   }
 }

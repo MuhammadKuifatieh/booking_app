@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../features/auth/data/models/auth_response.dart';
 import '../constant/perf_keys.dart';
+import '../models/user_model.dart';
 
 class GlobalFunctions {
   GlobalFunctions._();
@@ -43,5 +43,15 @@ class GlobalFunctions {
   static Future<void> removeUserInfo(String token) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.remove(PrefKeys.user);
+  }
+
+  static Future<bool> isFirstOpen() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    return !pref.containsKey(PrefKeys.isShowOnBorder);
+  }
+
+  static Future<void> setShowOnBoarder() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setBool(PrefKeys.isShowOnBorder, true);
   }
 }

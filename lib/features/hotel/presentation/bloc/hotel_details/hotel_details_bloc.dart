@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 
-import '../../../data/models/show_hotel_response.dart';
+import '../../../../../core/models/hotel_model.dart';
 import '../../../data/repositories/hotel_repository_implement.dart';
 import '../../../domain/usecases/show_hotel.dart';
 

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import '../../../../core/models/clinic_specialization_response.dart';
+
 ClinicSpecializationResponse clinicSpecializationResponseFromJson(String str) =>
     ClinicSpecializationResponse.fromJson(json.decode(str));
 
@@ -71,32 +73,3 @@ class Data {
       };
 }
 
-class ClinicSpecializationModel {
-  int? id;
-  String? name;
-
-  ClinicSpecializationModel({
-    this.id,
-    this.name,
-  });
-
-  ClinicSpecializationModel copyWith({
-    int? id,
-    String? name,
-  }) =>
-      ClinicSpecializationModel(
-        id: id ?? this.id,
-        name: name ?? this.name,
-      );
-
-  factory ClinicSpecializationModel.fromJson(Map<String, dynamic> json) =>
-      ClinicSpecializationModel(
-        id: json["id"],
-        name: json["name"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-      };
-}

@@ -1,10 +1,13 @@
-import '../../../../core/config/app_colors.dart';
+import 'package:booking_app/core/models/clinic_specialization_response.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../core/config/app_text_styles.dart';
 import '../../../../core/flutter_neumorphic/flutter_neumorphic.dart';
 import '../../../../core/presentation/widgets/main_app_bar.dart';
-import '../../../../core/presentation/widgets/network_image.dart';
-import '../../../../core/presentation/widgets/ratting_card.dart';
-import '../../../hotel/presentation/widgets/hotel_card.dart';
+import '../../../../core/presentation/widgets/main_error_widget.dart';
+import '../../../../core/presentation/widgets/main_loading_widget.dart';
+import '../bloc/clinics/clinics_bloc.dart';
+import '../widgets/clinic_card.dart';
 import 'clicnic_detailes_screen.dart';
 
 class ClinicScreen extends StatefulWidget {
@@ -17,184 +20,169 @@ class ClinicScreen extends StatefulWidget {
 
 class _ClinicScreenState extends State<ClinicScreen> {
   late Size size;
+  late final ClinicsBloc clinicsBloc;
+  @override
+  void initState() {
+    clinicsBloc = ClinicsBloc()..add(GetClinicSpecializationEvent());
+    super.initState();
+  }
+
   @override
   void didChangeDependencies() {
     size = MediaQuery.of(context).size;
     super.didChangeDependencies();
   }
 
-  List<String> types = [
-    "All",
-    "test1",
-    "test2",
-    "test3",
-  ];
-  ValueNotifier<int> selectedIndex = ValueNotifier(0);
+  late final ValueNotifier<ClinicSpecializationModel> selectedIndex;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: MainAppBar(
-        size: size,
-        title: "Clinics",
-      ),
-      body: Column(
-        children: [
-          ValueListenableBuilder<int>(
-              valueListenable: selectedIndex,
-              builder: (context, value, _) {
-                return Expanded(
-                  child: ListView.builder(
-                    padding: const EdgeInsets.only(top: 25),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: types.length,
-                    itemBuilder: (context, index) {
-                      return NeumorphicButton(
-                        onPressed: () {
-                          selectedIndex.value = index;
-                        },
-                        style: NeumorphicStyle(
-                          depth: value == index ? -10 : 4,
-                          shape: NeumorphicShape.flat,
-                          lightSource: LightSource.topRight,
-                          boxShape: NeumorphicBoxShape.roundRect(
-                            BorderRadius.circular(25),
-                          ),
-                          color: Colors.transparent,
-                        ),
-                        padding: EdgeInsets.zero,
-                        margin: const EdgeInsets.all(10),
-                        child: SizedBox(
-                          width: 100,
-                          height: 15,
-                          child: Center(
-                            child: Text(
-                              types[index],
-                              style: AppTextStyles.styleWeight500(
-                                fontSize: size.width * .04,
+    return BlocProvider(
+      create: (context) => clinicsBloc,
+      child: Scaffold(
+        appBar: MainAppBar(
+          size: size,
+          title: "Clinics",
+        ),
+        body: BlocConsumer<ClinicsBloc, ClinicsState>(
+          listener: (context, state) {
+            if (state.getClinicSpecializationStatus ==
+                GetClinicSpecializationStatus.succ) {
+              selectedIndex = ValueNotifier(state.clinicSpecializations.first);
+            }
+          },
+          builder: (context, state) {
+            if (state.getClinicSpecializationStatus ==
+                    GetClinicSpecializationStatus.loading ||
+                state.getClinicSpecializationStatus ==
+                    GetClinicSpecializationStatus.init) {
+              return const MainLoadingWidget();
+            } else if (state.getClinicSpecializationStatus ==
+                GetClinicSpecializationStatus.failed) {
+              return MainErrorWidget(
+                size: size,
+                onTap: () {
+                  clinicsBloc.add(GetClinicSpecializationEvent());
+                },
+              );
+            }
+            return Column(
+              children: [
+                ValueListenableBuilder<ClinicSpecializationModel>(
+                    valueListenable: selectedIndex,
+                    builder: (context, value, _) {
+                      return Expanded(
+                        child: ListView.builder(
+                          padding: const EdgeInsets.only(top: 25),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: state.clinicSpecializations.length,
+                          itemBuilder: (context, index) {
+                            return NeumorphicButton(
+                              onPressed: () {
+                                selectedIndex.value =
+                                    state.clinicSpecializations[index];
+                                clinicsBloc.add(
+                                  GetClinicsEvent(
+                                    isReload: true,
+                                    clinicSpecializationId:
+                                        state.clinicSpecializations[index].id,
+                                  ),
+                                );
+                              },
+                              style: NeumorphicStyle(
+                                depth:
+                                    value == state.clinicSpecializations[index]
+                                        ? -10
+                                        : 4,
+                                shape: NeumorphicShape.flat,
+                                lightSource: LightSource.topRight,
+                                boxShape: NeumorphicBoxShape.roundRect(
+                                  BorderRadius.circular(25),
+                                ),
+                                color: Colors.transparent,
                               ),
-                            ),
-                          ),
+                              margin: const EdgeInsets.all(10),
+                              child: SizedBox(
+                                width: 100,
+                                height: 15,
+                                child: Center(
+                                  child: Text(
+                                    state.clinicSpecializations[index].name!,
+                                    style: AppTextStyles.styleWeight500(
+                                      fontSize: size.width * .04,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       );
-                    },
-                  ),
-                );
-              }),
-          Expanded(
-            flex: 8,
-            child: ListView.builder(
-              itemCount: 15,
-              padding: EdgeInsets.only(top: size.width * .025),
-              itemBuilder: (context, index) {
-                return ClinicCard(
-                  size: size,
-                  onTap: () {
-                    Navigator.of(context).pushNamed(
-                      ClinicDetailsScreen.routeName,
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ClinicCard extends StatelessWidget {
-  const ClinicCard({
-    super.key,
-    required this.size,
-    required this.onTap,
-  });
-
-  final Size size;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Padding(
-        padding: EdgeInsets.only(bottom: size.width * .05),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Stack(
-              children: [
-                CacheImage(
-                  width: size.width * .45,
-                  height: size.width * .45,
-                  borderRadius: const BorderRadius.horizontal(
-                    left: Radius.circular(25),
-                  ),
-                  imageUrl:
-                      "https://media.istockphoto.com/id/138205019/photo/happy-healthcare-practitioner.jpg?s=612x612&w=0&k=20&c=b8kUyVtmZeW8MeLHcDsJfqqF0XiFBjq6tgBQZC7G0f0=",
+                    }),
+                Expanded(
+                  flex: 8,
+                  child: (state.getClinicsStatus == GetClinicsStatus.loading ||
+                              state.getClinicsStatus ==
+                                  GetClinicsStatus.init) &&
+                          state.clinics.isEmpty
+                      ? const MainLoadingWidget()
+                      : state.getClinicsStatus == GetClinicsStatus.failed &&
+                              state.clinics.isEmpty
+                          ? MainErrorWidget(
+                              size: size,
+                              onTap: () {
+                                clinicsBloc.add(GetClinicsEvent(
+                                  isReload: true,
+                                  clinicSpecializationId:
+                                      selectedIndex.value.id,
+                                ));
+                              },
+                            )
+                          : RefreshIndicator(
+                              onRefresh: () async {
+                                await Future.delayed(const Duration(seconds: 1))
+                                    .then((value) =>
+                                        clinicsBloc.add(GetClinicsEvent(
+                                          isReload: true,
+                                          clinicSpecializationId:
+                                              selectedIndex.value.id,
+                                        )));
+                              },
+                              child: ListView.builder(
+                                padding:
+                                    EdgeInsets.only(top: size.width * .025),
+                                itemCount: state.clinics.length +
+                                    (state.isEndPage ? 0 : 1),
+                                itemBuilder: (context, index) {
+                                  if (state.clinics.length == index) {
+                                    clinicsBloc.add(GetClinicsEvent(
+                                      clinicSpecializationId:
+                                          selectedIndex.value.id,
+                                    ));
+                                    return const Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: MainLoadingWidget(),
+                                    );
+                                  }
+                                  return ClinicCard(
+                                    size: size,
+                                    clinic: state.clinics[index],
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed(
+                                          ClinicDetailsScreen.routeName,
+                                          arguments: ClinicDetailsScreenParams(
+                                            clinicId: state.clinics[index].id!,
+                                          ));
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: FavoriteButton(
-                    onTap: () {},
-                    isFavorite: true,
-                  ),
-                ),
-                Positioned(
-                  right: 4,
-                  bottom: 4,
-                  child: RattingCard(
-                    rate: 4.8,
-                    size: size,
-                  ),
-                )
               ],
-            ),
-            Container(
-              width: size.width * .45,
-              height: size.width * .45,
-              padding: EdgeInsets.only(
-                left: size.width * .025,
-                right: size.width * .025,
-                top: size.width * .05,
-                bottom: size.width * .05,
-              ),
-              decoration: const BoxDecoration(
-                color: AppColors.offWhite,
-                borderRadius: BorderRadius.horizontal(
-                  right: Radius.circular(25),
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Dr. Muhammad",
-                    style: AppTextStyles.styleWeight500(
-                      fontSize: size.width * .04,
-                    ),
-                  ),
-                  Text(
-                    "test1",
-                    style: AppTextStyles.styleWeight500(
-                      fontSize: size.width * .04,
-                    ),
-                  ),
-                  Flexible(
-                    child: Text(
-                      "data data data data" * 5,
-                      style: AppTextStyles.styleWeight500(
-                        fontSize: size.width * .04,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 3,
-                    ),
-                  )
-                ],
-              ),
-            )
-          ],
+            );
+          },
         ),
       ),
     );

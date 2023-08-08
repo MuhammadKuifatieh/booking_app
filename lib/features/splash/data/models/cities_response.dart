@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import '../../../../core/models/city_model.dart';
+
 CitiesResponse citiesResponseFromJson(String str) =>
     CitiesResponse.fromJson(json.decode(str));
 
@@ -64,34 +66,5 @@ class Data {
         "cities": cities == null
             ? []
             : List<dynamic>.from(cities!.map((x) => x.toJson())),
-      };
-}
-
-class CityModel {
-  int? id;
-  String? name;
-
-  CityModel({
-    this.id,
-    this.name,
-  });
-
-  CityModel copyWith({
-    int? id,
-    String? name,
-  }) =>
-      CityModel(
-        id: id ?? this.id,
-        name: name ?? this.name,
-      );
-
-  factory CityModel.fromJson(Map<String, dynamic> json) => CityModel(
-        id: json["id"],
-        name: json["name"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
       };
 }

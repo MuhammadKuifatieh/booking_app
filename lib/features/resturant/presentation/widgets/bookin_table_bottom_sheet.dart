@@ -1,3 +1,4 @@
+import 'package:booking_app/core/models/restaurant_model.dart';
 import 'package:collection/collection.dart';
 
 import '../../../../core/config/app_colors.dart';
@@ -14,18 +15,14 @@ class BookingTableBottomSheet extends StatelessWidget {
   BookingTableBottomSheet({
     super.key,
     required this.size,
+    required this.tableTypes,
   });
 
   final Size size;
+  final List<TableTypeModel> tableTypes;
   final ValueNotifier<DateTime> selectedDate = ValueNotifier(DateTime.now());
   final ValueNotifier<int> bookingDays = ValueNotifier(1);
 
-  final List<String> types = [
-    "test0",
-    "test1",
-    "test2",
-    "test3",
-  ];
   final ValueNotifier<int> selectedIndex = ValueNotifier(0);
   @override
   Widget build(BuildContext context) {
@@ -152,11 +149,7 @@ class BookingTableBottomSheet extends StatelessWidget {
             valueListenable: selectedIndex,
             builder: (context, value, _) {
               return Wrap(
-                // padding: const EdgeInsets.only(top: 25),
-                // scrollDirection: Axis.horizontal,
-                // itemCount: types.length,
-                // itemBuilder: (context, index) {
-                children: types.mapIndexed((index, e) {
+                children: tableTypes.mapIndexed((index, e) {
                   return NeumorphicButton(
                     onPressed: () {
                       selectedIndex.value = index;
@@ -170,16 +163,20 @@ class BookingTableBottomSheet extends StatelessWidget {
                       ),
                       color: Colors.transparent,
                     ),
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     margin: const EdgeInsets.all(10),
                     child: SizedBox(
                       width: 80,
                       height: 15,
                       child: Center(
-                        child: Text(
-                          types[index],
-                          style: AppTextStyles.styleWeight500(
-                            fontSize: size.width * .04,
+                        child: Flexible(
+                          child: Text(
+                            tableTypes[index].name! * 2,
+                            style: AppTextStyles.styleWeight500(
+                              fontSize: size.width * .04,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
                           ),
                         ),
                       ),

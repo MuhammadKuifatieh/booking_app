@@ -2,24 +2,30 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/config/app_colors.dart';
 import '../../../../core/config/app_text_styles.dart';
-import '../../../../core/extensions/gradian.dart';
+import '../../../../core/models/restaurant_model.dart';
+import '../../../../core/presentation/widgets/favorite_button.dart';
 import '../../../../core/presentation/widgets/network_image.dart';
-import '../../../../core/presentation/widgets/ratting_card.dart';
 import '../pages/restaurant_details_screen.dart';
 
 class RestaurantCard extends StatelessWidget {
   const RestaurantCard({
     super.key,
     required this.size,
+    required this.restaurant,
   });
 
   final Size size;
+  final RestaurantModel restaurant;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(RestaurantDetailsScreen.routeName);
+        Navigator.of(context).pushNamed(
+          RestaurantDetailsScreen.routeName,
+          arguments:
+              RestaurantDetailsScreenParams(restaurantId: restaurant.id!),
+        );
       },
       child: Container(
         padding: const EdgeInsets.only(bottom: 15),
@@ -36,8 +42,7 @@ class RestaurantCard extends StatelessWidget {
                   height: size.width * .6,
                   borderRadius:
                       const BorderRadius.vertical(top: Radius.circular(15)),
-                  imageUrl:
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSS72fXNG6-GZcAPPh2Q8YR10zaDxbV7HGbRs8m2H8_31Ro_HOoXk3RD2VX9AoK_dS63Xs&usqp=CAU",
+                  imageUrl: restaurant.image!.mediaUrl!,
                 ),
                 Container(
                   width: size.width * .9,
@@ -61,7 +66,7 @@ class RestaurantCard extends StatelessWidget {
                       Align(
                         alignment: Alignment.topRight,
                         child: FavoriteButton(
-                          isFavorite: false,
+                          isFavorite: restaurant.isFavorite!,
                           onTap: () {},
                         ),
                       ),
@@ -69,16 +74,12 @@ class RestaurantCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Hotel Dence Royal",
+                            restaurant.name!,
                             style: AppTextStyles.styleWeight500(
                               color: AppColors.offWhite,
                               fontSize: size.width * .045,
                             ),
                           ),
-                          RattingCard(
-                            size: size,
-                            rate: 4.8,
-                          )
                         ],
                       )
                     ],
@@ -101,7 +102,7 @@ class RestaurantCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "San Marco, 0.1 miles from center",
+                    restaurant.city!.name!,
                     style: AppTextStyles.styleWeight500(
                       color: AppColors.grayDark,
                       fontSize: size.width * .04,
@@ -113,21 +114,11 @@ class RestaurantCard extends StatelessWidget {
                       Flexible(
                         flex: 3,
                         child: Text(
-                          "Standard double room \nNo prepayment",
+                          restaurant.placeContact!.address!,
                           style: AppTextStyles.styleWeight500(
                             fontSize: size.width * .04,
                           ),
                           maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Flexible(
-                        child: Text(
-                          "800000 \$",
-                          style: AppTextStyles.styleWeight900(
-                            fontSize: size.width * .045,
-                          ),
-                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
@@ -137,40 +128,6 @@ class RestaurantCard extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class FavoriteButton extends StatelessWidget {
-  const FavoriteButton({
-    super.key,
-    required this.onTap,
-    required this.isFavorite,
-  });
-  final VoidCallback onTap;
-  final bool isFavorite;
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: CircleAvatar(
-        radius: 17.5,
-        backgroundColor: AppColors.grayLight,
-        child: ShaderMask(
-          blendMode: BlendMode.srcIn,
-          shaderCallback: (bounds) => AppColors.mainGradent.createShader(
-            Rect.fromLTWH(0, 0, bounds.width, bounds.height),
-          ),
-          child: isFavorite
-              ? const Icon(
-                  Icons.favorite,
-                ).gradient()
-              : const Icon(
-                  Icons.favorite_border,
-                  color: AppColors.offWhite,
-                ),
         ),
       ),
     );

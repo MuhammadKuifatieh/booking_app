@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:booking_app/core/config/droppable_pro_max.dart';
 
-import '../../../data/models/show_hotel_response.dart';
+import '../../../../../core/models/hotel_model.dart';
 import '../../../data/repositories/hotel_repository_implement.dart';
 import '../../../domain/usecases/get_hotels.dart';
 
@@ -13,13 +14,19 @@ class HotelsBloc extends Bloc<HotelsEvent, HotelsState> {
   final _perPage = 10;
   final getHotels = GetHotels(HotelRepositoryImplement());
   HotelsBloc() : super(const HotelsState()) {
-    on<GetHotelsEvent>(_mapGetHotelsState);
+    on<GetHotelsEvent>(
+      _mapGetHotelsState,
+      transformer: droppableProMax(),
+    );
   }
 
   FutureOr<void> _mapGetHotelsState(
       GetHotelsEvent event, Emitter<HotelsState> emit) async {
     if (event.isReload || state.getHotelsStataus == GetHotelsStataus.init) {
-      emit(state.copyWith(getHotelsStataus: GetHotelsStataus.init));
+      emit(state.copyWith(
+        hotels: [],
+        getHotelsStataus: GetHotelsStataus.loading,
+      ));
       final result = await getHotels(GetHotelsParams(
         page: 1,
         perPage: _perPage,
@@ -33,9 +40,9 @@ class HotelsBloc extends Bloc<HotelsEvent, HotelsState> {
         )),
       );
     } else if (!state.isEndPage) {
-      emit(state.copyWith(getHotelsStataus: GetHotelsStataus.init));
+      emit(state.copyWith(getHotelsStataus: GetHotelsStataus.loading));
       final result = await getHotels(GetHotelsParams(
-        page: state.hotels.length ~/ _perPage,
+        page: state.hotels.length ~/ _perPage + 1,
         perPage: _perPage,
       ));
       result.fold(

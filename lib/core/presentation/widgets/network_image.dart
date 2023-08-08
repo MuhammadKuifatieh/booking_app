@@ -29,6 +29,7 @@ class CacheImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExtendedImage.network(
       imageUrl,
+      cache: true,
       height: height,
       width: width,
       loadStateChanged: (state) {

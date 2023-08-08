@@ -1,25 +1,30 @@
-import 'package:booking_app/core/extensions/gradian.dart';
-import 'package:booking_app/features/hotel/presentation/pages/hotel_details_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/config/app_colors.dart';
 import '../../../../core/config/app_text_styles.dart';
+import '../../../../core/models/hotel_model.dart';
+import '../../../../core/presentation/widgets/favorite_button.dart';
 import '../../../../core/presentation/widgets/network_image.dart';
-import '../../../../core/presentation/widgets/ratting_card.dart';
+import '../pages/hotel_details_screen.dart';
 
 class HotelCard extends StatelessWidget {
   const HotelCard({
     super.key,
     required this.size,
+    required this.hotel,
   });
 
   final Size size;
+  final HotelModel hotel;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(HotelDetailsScreen.routeName);
+        Navigator.of(context).pushNamed(
+          HotelDetailsScreen.routeName,
+          arguments: HotelDetailsScreenParams(hotelId: hotel.id!),
+        );
       },
       child: Container(
         padding: const EdgeInsets.only(bottom: 15),
@@ -36,8 +41,7 @@ class HotelCard extends StatelessWidget {
                   height: size.width * .6,
                   borderRadius:
                       const BorderRadius.vertical(top: Radius.circular(15)),
-                  imageUrl:
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6TDTZSs8CSIVCgBSw2Pb3HFkREHnPOuG2w4jWXevThGVynZiTA2quQXyvj4eAIEM_FcE&usqp=CAU",
+                  imageUrl: hotel.image!.mediaUrl!,
                 ),
                 Container(
                   width: size.width * .9,
@@ -61,7 +65,7 @@ class HotelCard extends StatelessWidget {
                       Align(
                         alignment: Alignment.topRight,
                         child: FavoriteButton(
-                          isFavorite: false,
+                          isFavorite: hotel.isFavorite!,
                           onTap: () {},
                         ),
                       ),
@@ -69,16 +73,12 @@ class HotelCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Hotel Dence Royal",
+                            hotel.name!,
                             style: AppTextStyles.styleWeight500(
                               color: AppColors.offWhite,
                               fontSize: size.width * .045,
                             ),
                           ),
-                          RattingCard(
-                            size: size,
-                            rate: 4.8,
-                          )
                         ],
                       )
                     ],
@@ -88,7 +88,7 @@ class HotelCard extends StatelessWidget {
             ),
             Container(
               width: size.width * .9,
-              height: size.width * .275,
+              height: size.width * .25,
               padding: const EdgeInsets.all(16),
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -101,7 +101,7 @@ class HotelCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "San Marco, 0.1 miles from center",
+                    hotel.city!.name!,
                     style: AppTextStyles.styleWeight500(
                       color: AppColors.grayDark,
                       fontSize: size.width * .04,
@@ -113,21 +113,11 @@ class HotelCard extends StatelessWidget {
                       Flexible(
                         flex: 3,
                         child: Text(
-                          "Standard double room \nNo prepayment",
+                          hotel.placeContact!.address!,
                           style: AppTextStyles.styleWeight500(
                             fontSize: size.width * .04,
                           ),
                           maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Flexible(
-                        child: Text(
-                          "800000 \$",
-                          style: AppTextStyles.styleWeight900(
-                            fontSize: size.width * .045,
-                          ),
-                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
@@ -137,40 +127,6 @@ class HotelCard extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class FavoriteButton extends StatelessWidget {
-  const FavoriteButton({
-    super.key,
-    required this.onTap,
-    required this.isFavorite,
-  });
-  final VoidCallback onTap;
-  final bool isFavorite;
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: CircleAvatar(
-        radius: 17.5,
-        backgroundColor: AppColors.grayLight,
-        child: ShaderMask(
-          blendMode: BlendMode.srcIn,
-          shaderCallback: (bounds) => AppColors.mainGradent.createShader(
-            Rect.fromLTWH(0, 0, bounds.width, bounds.height),
-          ),
-          child: isFavorite
-              ? const Icon(
-                  Icons.favorite,
-                ).gradient()
-              : const Icon(
-                  Icons.favorite_border,
-                  color: AppColors.offWhite,
-                ),
         ),
       ),
     );

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../../../splash/data/models/cities_response.dart';
+import '../../../../core/models/restaurant_model.dart';
 
 ShowRestaurantResponse showRestaurantResponseFromJson(String str) =>
     ShowRestaurantResponse.fromJson(json.decode(str));
@@ -66,100 +66,6 @@ class Data {
 
   Map<String, dynamic> toJson() => {
         "restaurant": restaurant?.toJson(),
-      };
-}
-
-class RestaurantModel {
-  int? id;
-  String? name;
-  String? about;
-  Admin? admin;
-  CityModel? city;
-  List<TableTypesModel>? tableTypes;
-
-  RestaurantModel({
-    this.id,
-    this.name,
-    this.about,
-    this.admin,
-    this.city,
-    this.tableTypes,
-  });
-
-  RestaurantModel copyWith({
-    int? id,
-    String? name,
-    String? about,
-    Admin? admin,
-    CityModel? city,
-    List<TableTypesModel>? tableTypes,
-  }) =>
-      RestaurantModel(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        about: about ?? this.about,
-        admin: admin ?? this.admin,
-        city: city ?? this.city,
-        tableTypes: tableTypes ?? this.tableTypes,
-      );
-
-  factory RestaurantModel.fromJson(Map<String, dynamic> json) =>
-      RestaurantModel(
-        id: json["id"],
-        name: json["name"],
-        about: json["about"],
-        admin: json["admin"] == null ? null : Admin.fromJson(json["admin"]),
-        city: json["city"] == null ? null : CityModel.fromJson(json["city"]),
-        tableTypes: json["table_types"] == null
-            ? []
-            : List<TableTypesModel>.from(
-                json["table_types"]!.map((x) => TableTypesModel.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "about": about,
-        "admin": admin?.toJson(),
-        "city": city?.toJson(),
-        "table_types": tableTypes == null
-            ? []
-            : List<dynamic>.from(tableTypes!.map((x) => x.toJson())),
-      };
-}
-
-class Admin {
-  int? id;
-  String? name;
-  String? username;
-
-  Admin({
-    this.id,
-    this.name,
-    this.username,
-  });
-
-  Admin copyWith({
-    int? id,
-    String? name,
-    String? username,
-  }) =>
-      Admin(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        username: username ?? this.username,
-      );
-
-  factory Admin.fromJson(Map<String, dynamic> json) => Admin(
-        id: json["id"],
-        name: json["name"],
-        username: json["username"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "username": username,
       };
 }
 

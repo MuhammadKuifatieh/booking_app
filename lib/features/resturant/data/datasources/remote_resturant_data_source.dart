@@ -8,7 +8,7 @@ class RemoteRestaurantDataSource {
   Future<RestaurantsResponse> getRestaurants(QueryParams params) async {
     final GetApi getApi = GetApi(
       uri: ApiVariables.getRestaurants(params: params),
-      fromJson: resturantsResponseFromJson,
+      fromJson: restaurantsResponseFromJson,
     );
     final result = await getApi.callRequest();
     return result;
@@ -17,7 +17,7 @@ class RemoteRestaurantDataSource {
   Future<ShowRestaurantResponse> showRestaurant(int restaurantId) async {
     final GetApi getApi = GetApi(
       uri: ApiVariables.showRestuarant(restaurantId: restaurantId),
-      fromJson: resturantsResponseFromJson,
+      fromJson: showRestaurantResponseFromJson,
     );
     final restult = await getApi.callRequest();
     return restult;

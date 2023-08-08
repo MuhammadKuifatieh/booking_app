@@ -19,4 +19,10 @@ class AppColors {
       AppColors.orangeGradientEnd,
     ],
   );
+  static const LinearGradient secGradent = LinearGradient(
+    colors: [
+      Color.fromARGB(255, 255, 127, 53),
+      Color.fromARGB(255, 250, 193, 70),
+    ],
+  );
 }

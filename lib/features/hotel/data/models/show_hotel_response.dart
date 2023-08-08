@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../../../splash/data/models/cities_response.dart';
+import '../../../../core/models/hotel_model.dart';
 
 ShowHotelResponse showHotelResponseFromJson(String str) =>
     ShowHotelResponse.fromJson(json.decode(str));
@@ -59,63 +59,12 @@ class Data {
       );
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        hotel: json["hotel"] == null ? null : HotelModel.fromJson(json["hotel"]),
+        hotel:
+            json["hotel"] == null ? null : HotelModel.fromJson(json["hotel"]),
       );
 
   Map<String, dynamic> toJson() => {
         "hotel": hotel?.toJson(),
-      };
-}
-
-class HotelModel {
-  int? id;
-  String? name;
-  String? about;
-  CityModel? city;
-  List<RoomTypeModel>? roomTypes;
-
-  HotelModel({
-    this.id,
-    this.name,
-    this.about,
-    this.city,
-    this.roomTypes,
-  });
-
-  HotelModel copyWith({
-    int? id,
-    String? name,
-    String? about,
-    CityModel? city,
-    List<RoomTypeModel>? roomTypes,
-  }) =>
-      HotelModel(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        about: about ?? this.about,
-        city: city ?? this.city,
-        roomTypes: roomTypes ?? this.roomTypes,
-      );
-
-  factory HotelModel.fromJson(Map<String, dynamic> json) => HotelModel(
-        id: json["id"],
-        name: json["name"],
-        about: json["about"],
-        city: json["city"] == null ? null : CityModel.fromJson(json["city"]),
-        roomTypes: json["room_types"] == null
-            ? []
-            : List<RoomTypeModel>.from(
-                json["room_types"]!.map((x) => RoomTypeModel.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "about": about,
-        "city": city?.toJson(),
-        "room_types": roomTypes == null
-            ? []
-            : List<dynamic>.from(roomTypes!.map((x) => x.toJson())),
       };
 }
 

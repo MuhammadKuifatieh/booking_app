@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:booking_app/core/config/droppable_pro_max.dart';
 
-import '../../../data/models/show_restaurant_response.dart';
+import '../../../../../core/models/restaurant_model.dart';
 import '../../../data/repositories/restaurant_repository_implement.dart';
 import '../../../domain/usecases/get_restaurants.dart';
 
@@ -13,13 +14,19 @@ class RestaurantsBloc extends Bloc<RestaurantsEvent, RestaurantsState> {
   final _perPage = 10;
   final _getRestaurants = GetRestaurants(RestaurantRepositoryImplement());
   RestaurantsBloc() : super(const RestaurantsState()) {
-    on<GetRestaurantsEvent>(_mapGetRestaurantsState);
+    on<GetRestaurantsEvent>(
+      _mapGetRestaurantsState,
+      transformer: droppableProMax(),
+    );
   }
   FutureOr<void> _mapGetRestaurantsState(
       GetRestaurantsEvent event, Emitter<RestaurantsState> emit) async {
     if (state.getRestaurantsStatus == GetRestaurantsStatus.inti ||
         event.isReload) {
-      emit(state.copyWith(getRestaurantsStatus: GetRestaurantsStatus.loading));
+      emit(state.copyWith(
+        getRestaurantsStatus: GetRestaurantsStatus.loading,
+        restaurants: [],
+      ));
       final result = await _getRestaurants(GetRestaurantsParams(
         page: 1,
         perPage: _perPage,

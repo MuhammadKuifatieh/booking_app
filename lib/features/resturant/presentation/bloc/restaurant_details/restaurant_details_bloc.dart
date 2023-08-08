@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 
-import '../../../data/models/show_restaurant_response.dart';
+import '../../../../../core/models/restaurant_model.dart';
 import '../../../data/repositories/restaurant_repository_implement.dart';
 import '../../../domain/usecases/show_restaurant.dart';
 

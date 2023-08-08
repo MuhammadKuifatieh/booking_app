@@ -46,7 +46,7 @@ class _ShowLocationScreenState extends State<ShowLocationScreen>
         future: LocationService.getUserLocation(),
         builder: (context, AsyncSnapshot<LocationData?> snapshot) {
           if (!snapshot.hasData) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }

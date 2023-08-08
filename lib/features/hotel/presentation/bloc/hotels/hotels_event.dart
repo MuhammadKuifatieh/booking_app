@@ -4,7 +4,8 @@ abstract class HotelsEvent {
   const HotelsEvent();
 }
 
-class GetHotelsEvent extends HotelsEvent {
+class GetHotelsEvent extends HotelsEvent with EventWithReload {
+  @override
   final bool isReload;
 
   GetHotelsEvent({this.isReload = false});

@@ -2,50 +2,21 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/config/app_colors.dart';
 import '../../../../core/config/app_text_styles.dart';
-import '../../../../core/presentation/widgets/main_app_bar.dart';
+import '../../../../core/models/clinic_model.dart';
+import '../../../../core/presentation/widgets/favorite_button.dart';
 import '../../../../core/presentation/widgets/network_image.dart';
-import '../../../../core/presentation/widgets/ratting_card.dart';
-import '../../../hotel/presentation/widgets/hotel_card.dart';
-
-class TripScreen extends StatefulWidget {
-  static const routeName = "trip_screen";
-  const TripScreen({super.key});
-
-  @override
-  State<TripScreen> createState() => _TripScreenState();
-}
-
-class _TripScreenState extends State<TripScreen> {
-  late Size size;
-  @override
-  void didChangeDependencies() {
-    size = MediaQuery.of(context).size;
-    super.didChangeDependencies();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: MainAppBar(
-        size: size,
-        title: "Trips",
-      ),
-      body: ListView.builder(itemBuilder: (context, index) {
-        return ClinicCard(size: size, onTap: () {});
-      }),
-    );
-  }
-}
 
 class ClinicCard extends StatelessWidget {
   const ClinicCard({
     super.key,
     required this.size,
     required this.onTap,
+    required this.clinic,
   });
 
   final Size size;
   final VoidCallback onTap;
+  final ClinicModel clinic;
 
   @override
   Widget build(BuildContext context) {
@@ -64,24 +35,15 @@ class ClinicCard extends StatelessWidget {
                   borderRadius: const BorderRadius.horizontal(
                     left: Radius.circular(25),
                   ),
-                  imageUrl:
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOsoDsxB8SGBdq139EZT5GNfS27RZemut-Lg&usqp=CAU",
+                  imageUrl: clinic.image!.mediaUrl!,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: FavoriteButton(
                     onTap: () {},
-                    isFavorite: true,
+                    isFavorite: clinic.isFavorite!,
                   ),
                 ),
-                Positioned(
-                  right: 4,
-                  bottom: 4,
-                  child: RattingCard(
-                    rate: 4.8,
-                    size: size,
-                  ),
-                )
               ],
             ),
             Container(
@@ -104,20 +66,21 @@ class ClinicCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Booking car",
+                    clinic.name!,
                     style: AppTextStyles.styleWeight500(
                       fontSize: size.width * .04,
                     ),
                   ),
                   Text(
-                    "test1",
+                    clinic.clinicSpecialization!.name!,
                     style: AppTextStyles.styleWeight500(
                       fontSize: size.width * .04,
+                      color: AppColors.grayDark,
                     ),
                   ),
                   Flexible(
                     child: Text(
-                      "data data data data" * 5,
+                      clinic.placeContact!.address!,
                       style: AppTextStyles.styleWeight500(
                         fontSize: size.width * .04,
                       ),

@@ -4,7 +4,7 @@ import '../../../../core/presentation/widgets/main_app_bar.dart';
 import '../../../clinic/presentation/pages/clinic_screen.dart';
 import '../../../hotel/presentation/pages/hotel_screen.dart';
 import '../../../resturant/presentation/pages/resturant_screen.dart';
-import '../../../trip/presentation/pages/trip_screen.dart';
+import '../../../car_office/presentation/pages/car_office_screen.dart';
 import '../widgets/category_card.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -72,7 +72,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   Navigator.of(context).pushNamed(ResturantScreen.routeName);
                   return;
                 case 3:
-                  Navigator.of(context).pushNamed(TripScreen.routeName);
+                  Navigator.of(context).pushNamed(CarOfficeScreen.routeName);
                   return;
               }
             },

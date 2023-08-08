@@ -1,4 +1,3 @@
-import 'package:booking_app/features/search/presentation/pages/show_location_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -9,7 +8,7 @@ import '../../../../core/extensions/gradian.dart';
 import '../../../../core/flutter_neumorphic/flutter_neumorphic.dart';
 import '../../../../core/presentation/widgets/main_button.dart';
 import '../../../../core/presentation/widgets/main_text_failed.dart';
-import '../../../hotel/presentation/widgets/hotel_card.dart';
+import 'show_location_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   static const String routeName = "search_screen";
@@ -122,7 +121,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 itemCount: 40,
                 padding: const EdgeInsets.symmetric(vertical: 15),
                 itemBuilder: (context, index) {
-                  return HotelCard(size: size);
+                  return Container();
                 },
               ),
             ),
