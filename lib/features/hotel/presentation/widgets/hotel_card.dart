@@ -1,3 +1,4 @@
+import 'package:booking_app/core/enums/categories_enum.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/config/app_colors.dart';
@@ -10,12 +11,14 @@ import '../pages/hotel_details_screen.dart';
 class HotelCard extends StatelessWidget {
   const HotelCard({
     super.key,
+    this.inHome = false,
     required this.size,
     required this.hotel,
   });
 
   final Size size;
   final HotelModel hotel;
+  final bool inHome;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,7 @@ class HotelCard extends StatelessWidget {
         );
       },
       child: Container(
-        padding: const EdgeInsets.only(bottom: 15),
+        padding: inHome ? EdgeInsets.zero : const EdgeInsets.only(bottom: 15),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
         ),
@@ -39,8 +42,10 @@ class HotelCard extends StatelessWidget {
                 CacheImage(
                   width: size.width * .9,
                   height: size.width * .6,
-                  borderRadius:
-                      const BorderRadius.vertical(top: Radius.circular(15)),
+                  borderRadius: BorderRadius.vertical(
+                    top: const Radius.circular(15),
+                    bottom: inHome ? const Radius.circular(15) : Radius.zero,
+                  ),
                   imageUrl: hotel.image!.mediaUrl!,
                 ),
                 Container(
@@ -58,6 +63,9 @@ class HotelCard extends StatelessWidget {
                       begin: Alignment.bottomCenter,
                       end: Alignment.topCenter,
                     ),
+                    borderRadius: BorderRadius.vertical(
+                      bottom: inHome ? const Radius.circular(15) : Radius.zero,
+                    ),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -65,8 +73,8 @@ class HotelCard extends StatelessWidget {
                       Align(
                         alignment: Alignment.topRight,
                         child: FavoriteButton(
-                          isFavorite: hotel.isFavorite!,
-                          onTap: () {},
+                          modelId: hotel.id!,
+                          modelType: CategoriesEnum.hotel,
                         ),
                       ),
                       Row(
@@ -86,46 +94,47 @@ class HotelCard extends StatelessWidget {
                 ),
               ],
             ),
-            Container(
-              width: size.width * .9,
-              height: size.width * .25,
-              padding: const EdgeInsets.all(16),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(15),
+            if (!inHome)
+              Container(
+                width: size.width * .9,
+                height: size.width * .25,
+                padding: const EdgeInsets.all(16),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.vertical(
+                    bottom: Radius.circular(15),
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      hotel.city!.name!,
+                      style: AppTextStyles.styleWeight500(
+                        color: AppColors.grayDark,
+                        fontSize: size.width * .04,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          flex: 3,
+                          child: Text(
+                            hotel.placeContact!.address!,
+                            style: AppTextStyles.styleWeight500(
+                              fontSize: size.width * .04,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    hotel.city!.name!,
-                    style: AppTextStyles.styleWeight500(
-                      color: AppColors.grayDark,
-                      fontSize: size.width * .04,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        flex: 3,
-                        child: Text(
-                          hotel.placeContact!.address!,
-                          style: AppTextStyles.styleWeight500(
-                            fontSize: size.width * .04,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
           ],
         ),
       ),

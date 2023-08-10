@@ -1,3 +1,4 @@
+import 'package:booking_app/core/enums/categories_enum.dart';
 import 'package:booking_app/core/extensions/gradian.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,7 +53,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
             if (state.showHotelStatus == ShowHotelStatus.loading ||
                 state.showHotelStatus == ShowHotelStatus.init) {
               return const MainLoadingWidget();
-            } else if (state.showHotelStatus == ShowHotelStatus.faild) {
+            } else if (state.showHotelStatus == ShowHotelStatus.failed) {
               return MainErrorWidget(
                   size: size,
                   onTap: () {
@@ -118,8 +119,8 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                                 ),
                               ),
                               FavoriteButton(
-                                onTap: () {},
-                                isFavorite: state.hotel!.isFavorite!,
+                                modelId: state.hotel!.id!,
+                                modelType: CategoriesEnum.hotel,
                               ),
                             ],
                           ),
@@ -160,6 +161,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                     PlaceInfoWidget(
                       size: size,
                       title: "Hotel",
+                      hasPadding: true,
                       cityName: state.hotel!.city!.name!,
                       placeContact: state.hotel!.placeContact!,
                     ),
@@ -195,6 +197,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                   arguments: RoomScreenParams(
                     hotelId: state.hotel!.id!,
                     roomTypes: state.hotel!.roomTypes!,
+                    hotelBloc: hotelBloc,
                   ),
                 );
               },

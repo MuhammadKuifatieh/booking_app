@@ -13,3 +13,23 @@ class ToggleFavoriteEvent extends FavoriteEvent {
     required this.modelType,
   });
 }
+
+class AddItemsToFavoriteEvent extends FavoriteEvent {
+  final List<Object> items;
+  final int modelType;
+
+  AddItemsToFavoriteEvent({
+    required this.items,
+    required this.modelType,
+  });
+}
+
+class AddItemToFavoriteEvent extends FavoriteEvent {
+  final Object item;
+  final int modelType;
+
+  AddItemToFavoriteEvent({
+    required this.item,
+    required this.modelType,
+  });
+}

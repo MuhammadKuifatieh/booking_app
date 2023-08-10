@@ -9,3 +9,9 @@ class ShowHotelEvent extends HotelEvent {
 
   ShowHotelEvent({required this.hotelId});
 }
+
+class BookingHotelEvent extends HotelEvent {
+  final BookingHotelParams params;
+
+  BookingHotelEvent(this.params);
+}

@@ -9,3 +9,9 @@ class ShowClinicDetailsEvent extends ClinicDetailsEvent {
 
   ShowClinicDetailsEvent({required this.clinicId});
 }
+
+class BookingClinicEvent extends ClinicDetailsEvent {
+  final BookingClinicParams params;
+
+  BookingClinicEvent(this.params);
+}

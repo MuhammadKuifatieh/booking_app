@@ -3,9 +3,12 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 
 import '../../../../../core/config/droppable_pro_max.dart';
+import '../../../../../core/enums/categories_enum.dart';
 import '../../../../../core/models/clinic_model.dart';
 import '../../../../../core/models/clinic_specialization_response.dart';
+import '../../../../../core/presentation/blocs/bloc/favorite_bloc.dart';
 import '../../../../../core/usecase/use_case.dart';
+import '../../../../../injection.dart';
 import '../../../data/repositories/clinic_repository_implement.dart';
 import '../../../domain/usecases/get_clinic_specialization.dart';
 import '../../../domain/usecases/get_clinics.dart';
@@ -67,11 +70,17 @@ class ClinicsBloc extends Bloc<ClinicsEvent, ClinicsState> {
 
       result.fold(
         (l) => emit(state.copyWith(getClinicsStatus: GetClinicsStatus.failed)),
-        (r) => emit(state.copyWith(
-          clinics: r.data!.clinics,
-          isEndPage: r.data!.clinics!.length < _perPage,
-          getClinicsStatus: GetClinicsStatus.succ,
-        )),
+        (r) {
+          emit(state.copyWith(
+            clinics: r.data!.clinics,
+            isEndPage: r.data!.clinics!.length < _perPage,
+            getClinicsStatus: GetClinicsStatus.succ,
+          ));
+          serviceLocator<FavoriteBloc>().add(AddItemsToFavoriteEvent(
+            items: r.data!.clinics!,
+            modelType: CategoriesEnum.clinic.status,
+          ));
+        },
       );
     } else if (!state.isEndPage) {
       emit(state.copyWith(getClinicsStatus: GetClinicsStatus.loading));
@@ -83,11 +92,17 @@ class ClinicsBloc extends Bloc<ClinicsEvent, ClinicsState> {
 
       result.fold(
         (l) => emit(state.copyWith(getClinicsStatus: GetClinicsStatus.failed)),
-        (r) => emit(state.copyWith(
-          clinics: List.of(state.clinics)..addAll(r.data!.clinics!),
-          isEndPage: r.data!.clinics!.length < _perPage,
-          getClinicsStatus: GetClinicsStatus.succ,
-        )),
+        (r) {
+          emit(state.copyWith(
+            clinics: List.of(state.clinics)..addAll(r.data!.clinics!),
+            isEndPage: r.data!.clinics!.length < _perPage,
+            getClinicsStatus: GetClinicsStatus.succ,
+          ));
+          serviceLocator<FavoriteBloc>().add(AddItemsToFavoriteEvent(
+            items: r.data!.clinics!,
+            modelType: CategoriesEnum.clinic.status,
+          ));
+        },
       );
     }
   }

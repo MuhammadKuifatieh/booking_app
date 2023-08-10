@@ -1,3 +1,4 @@
+import 'package:booking_app/core/enums/categories_enum.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/config/app_colors.dart';
@@ -66,8 +67,8 @@ class RestaurantCard extends StatelessWidget {
                       Align(
                         alignment: Alignment.topRight,
                         child: FavoriteButton(
-                          isFavorite: restaurant.isFavorite!,
-                          onTap: () {},
+                          modelId: restaurant.id!,
+                          modelType: CategoriesEnum.restaurant,
                         ),
                       ),
                       Row(

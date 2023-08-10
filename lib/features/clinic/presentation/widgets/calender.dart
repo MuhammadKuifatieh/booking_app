@@ -6,7 +6,9 @@ import '../../../../core/config/app_text_styles.dart';
 import '../../../../core/flutter_neumorphic/flutter_neumorphic.dart';
 
 class CalendarWidget extends StatefulWidget {
-  const CalendarWidget({super.key});
+  const CalendarWidget({super.key, required this.dateValue});
+
+  final ValueNotifier<DateTime> dateValue;
 
   @override
   State<CalendarWidget> createState() => _CalendarWidgetState();
@@ -14,12 +16,11 @@ class CalendarWidget extends StatefulWidget {
 
 class _CalendarWidgetState extends State<CalendarWidget> {
   int thisMonth = DateTime.now().month;
-  ValueNotifier<DateTime> dateValue = ValueNotifier(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<DateTime>(
-        valueListenable: dateValue,
+        valueListenable: widget.dateValue,
         builder: (context, value, _) {
           return TableCalendar(
             weekendDays: const [5],
@@ -34,7 +35,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
             ),
             onDaySelected: (selectedDate, _) {
               log(selectedDate.toString());
-              dateValue.value = selectedDate;
+              widget.dateValue.value = selectedDate;
             },
             startingDayOfWeek: StartingDayOfWeek.saturday,
             calendarBuilders: CalendarBuilders(

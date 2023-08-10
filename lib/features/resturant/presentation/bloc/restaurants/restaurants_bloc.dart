@@ -3,7 +3,10 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:booking_app/core/config/droppable_pro_max.dart';
 
+import '../../../../../core/enums/categories_enum.dart';
 import '../../../../../core/models/restaurant_model.dart';
+import '../../../../../core/presentation/blocs/bloc/favorite_bloc.dart';
+import '../../../../../injection.dart';
 import '../../../data/repositories/restaurant_repository_implement.dart';
 import '../../../domain/usecases/get_restaurants.dart';
 
@@ -34,11 +37,17 @@ class RestaurantsBloc extends Bloc<RestaurantsEvent, RestaurantsState> {
       result.fold(
         (l) => emit(
             state.copyWith(getRestaurantsStatus: GetRestaurantsStatus.failed)),
-        (r) => emit(state.copyWith(
-          isEndPage: r.data!.restaurants!.length < _perPage,
-          restaurants: r.data!.restaurants,
-          getRestaurantsStatus: GetRestaurantsStatus.succ,
-        )),
+        (r) {
+          emit(state.copyWith(
+            isEndPage: r.data!.restaurants!.length < _perPage,
+            restaurants: r.data!.restaurants,
+            getRestaurantsStatus: GetRestaurantsStatus.succ,
+          ));
+          serviceLocator<FavoriteBloc>().add(AddItemsToFavoriteEvent(
+            items: r.data!.restaurants!,
+            modelType: CategoriesEnum.restaurant.status,
+          ));
+        },
       );
     } else if (!state.isEndPage) {
       emit(state.copyWith(getRestaurantsStatus: GetRestaurantsStatus.loading));
@@ -49,11 +58,18 @@ class RestaurantsBloc extends Bloc<RestaurantsEvent, RestaurantsState> {
       result.fold(
         (l) => emit(
             state.copyWith(getRestaurantsStatus: GetRestaurantsStatus.failed)),
-        (r) => emit(state.copyWith(
-          isEndPage: r.data!.restaurants!.length < _perPage,
-          restaurants: List.of(state.restaurants)..addAll(r.data!.restaurants!),
-          getRestaurantsStatus: GetRestaurantsStatus.succ,
-        )),
+        (r) {
+          emit(state.copyWith(
+            isEndPage: r.data!.restaurants!.length < _perPage,
+            restaurants: List.of(state.restaurants)
+              ..addAll(r.data!.restaurants!),
+            getRestaurantsStatus: GetRestaurantsStatus.succ,
+          ));
+          serviceLocator<FavoriteBloc>().add(AddItemsToFavoriteEvent(
+            items: r.data!.restaurants!,
+            modelType: CategoriesEnum.restaurant.status,
+          ));
+        },
       );
     }
   }

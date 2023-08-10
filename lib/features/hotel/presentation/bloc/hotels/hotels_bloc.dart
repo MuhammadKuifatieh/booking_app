@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:booking_app/core/config/droppable_pro_max.dart';
+import 'package:booking_app/core/enums/categories_enum.dart';
+import 'package:booking_app/core/presentation/blocs/bloc/favorite_bloc.dart';
+import 'package:booking_app/injection.dart';
 
 import '../../../../../core/models/hotel_model.dart';
 import '../../../data/repositories/hotel_repository_implement.dart';
@@ -33,11 +36,17 @@ class HotelsBloc extends Bloc<HotelsEvent, HotelsState> {
       ));
       result.fold(
         (l) => emit(state.copyWith(getHotelsStataus: GetHotelsStataus.failed)),
-        (r) => emit(state.copyWith(
-          hotels: r.data!.hotels,
-          getHotelsStataus: GetHotelsStataus.succ,
-          isEndPage: r.data!.hotels!.length < _perPage,
-        )),
+        (r) {
+          emit(state.copyWith(
+            hotels: r.data!.hotels,
+            getHotelsStataus: GetHotelsStataus.succ,
+            isEndPage: r.data!.hotels!.length < _perPage,
+          ));
+          serviceLocator<FavoriteBloc>().add(AddItemsToFavoriteEvent(
+            items: r.data!.hotels!,
+            modelType: CategoriesEnum.hotel.status,
+          ));
+        },
       );
     } else if (!state.isEndPage) {
       emit(state.copyWith(getHotelsStataus: GetHotelsStataus.loading));
@@ -47,11 +56,17 @@ class HotelsBloc extends Bloc<HotelsEvent, HotelsState> {
       ));
       result.fold(
         (l) => emit(state.copyWith(getHotelsStataus: GetHotelsStataus.failed)),
-        (r) => emit(state.copyWith(
-          getHotelsStataus: GetHotelsStataus.succ,
-          isEndPage: r.data!.hotels!.length < _perPage,
-          hotels: List.of(state.hotels)..addAll(r.data!.hotels!),
-        )),
+        (r) {
+          emit(state.copyWith(
+            getHotelsStataus: GetHotelsStataus.succ,
+            isEndPage: r.data!.hotels!.length < _perPage,
+            hotels: List.of(state.hotels)..addAll(r.data!.hotels!),
+          ));
+          serviceLocator<FavoriteBloc>().add(AddItemsToFavoriteEvent(
+            items: r.data!.hotels!,
+            modelType: CategoriesEnum.hotel.status,
+          ));
+        },
       );
     }
   }

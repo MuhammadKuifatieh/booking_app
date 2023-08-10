@@ -1,6 +1,10 @@
 import 'dart:developer';
 
-import 'package:booking_app/core/presentation/widgets/favorite_button.dart';
+import 'package:booking_app/core/config/toast.dart';
+import 'package:booking_app/features/main/presentation/pages/main_screen.dart';
+
+import '../../domain/usecases/booking_resturant.dart';
+import 'resturant_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -8,8 +12,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../../core/config/app_colors.dart';
 import '../../../../core/config/app_text_styles.dart';
 import '../../../../core/constant/svg_paths.dart';
+import '../../../../core/enums/categories_enum.dart';
 import '../../../../core/extensions/gradian.dart';
 import '../../../../core/flutter_neumorphic/flutter_neumorphic.dart';
+import '../../../../core/presentation/pages/paymant_screen.dart';
+import '../../../../core/presentation/widgets/favorite_button.dart';
 import '../../../../core/presentation/widgets/main_button.dart';
 import '../../../../core/presentation/widgets/main_error_widget.dart';
 import '../../../../core/presentation/widgets/main_loading_widget.dart';
@@ -53,7 +60,24 @@ class _RestaurantDetailsScreenState extends State<RestaurantDetailsScreen> {
       create: (context) => restaurantDetailsBloc,
       child: Scaffold(
         body: BlocConsumer<RestaurantDetailsBloc, RestaurantDetailsState>(
-          listener: (context, state) {},
+          listener: (context, state) {
+            if (state.bookingRestaurantStatus ==
+                BookingRestaurantStatus.loading) {
+              Toast.showLoading();
+            } else if (state.bookingRestaurantStatus ==
+                BookingRestaurantStatus.failed) {
+              Toast.closeAllLoading();
+              Navigator.of(context).pop();
+              Toast.showText(text: "something wrong");
+            } else if (state.bookingRestaurantStatus ==
+                BookingRestaurantStatus.succ) {
+              Toast.closeAllLoading();
+              Navigator.of(context).popUntil(
+                (route) => (route.settings.name == ResturantScreen.routeName ||
+                    route.settings.name == MainScreen.routeName),
+              );
+            }
+          },
           builder: (context, state) {
             log(state.showRestaurantStatus.toString());
             if (state.showRestaurantStatus == ShowRestaurantStatus.loading ||
@@ -127,8 +151,8 @@ class _RestaurantDetailsScreenState extends State<RestaurantDetailsScreen> {
                                 ),
                               ),
                               FavoriteButton(
-                                onTap: () {},
-                                isFavorite: state.restaurant!.isFavorite!,
+                                modelId: state.restaurant!.id!,
+                                modelType: CategoriesEnum.restaurant,
                               )
                             ],
                           ),
@@ -207,6 +231,24 @@ class _RestaurantDetailsScreenState extends State<RestaurantDetailsScreen> {
                   builder: (_) => BookingTableBottomSheet(
                     size: size,
                     tableTypes: state.restaurant!.tableTypes!,
+                    onTap: (tableId, days, date) {
+                      Navigator.of(context).pushNamed(
+                        PaymentScreen.routeName,
+                        arguments: PaymentScreenParams(
+                          onTapConfirm: () {
+                            restaurantDetailsBloc.add(
+                              BookingRestaurantEvent(
+                                BookingRestaurantParams(
+                                  restaurantId: state.restaurant!.id!,
+                                  tableTypeId: tableId,
+                                  date: date,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    },
                   ),
                 );
               },

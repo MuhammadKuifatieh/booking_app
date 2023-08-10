@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
 import 'city_model.dart';
 import 'clinic_specialization_response.dart';
 import 'image_model.dart';
@@ -125,8 +127,8 @@ class ClinicModel {
 class ClinicSessionModel {
   int? id;
   int? slotOfDay;
-  String? startTime;
-  String? endTime;
+  TimeOfDay? startTime;
+  TimeOfDay? endTime;
 
   ClinicSessionModel({
     this.id,
@@ -138,8 +140,8 @@ class ClinicSessionModel {
   ClinicSessionModel copyWith({
     int? id,
     int? slotOfDay,
-    String? startTime,
-    String? endTime,
+    TimeOfDay? startTime,
+    TimeOfDay? endTime,
   }) =>
       ClinicSessionModel(
         id: id ?? this.id,
@@ -152,8 +154,19 @@ class ClinicSessionModel {
       ClinicSessionModel(
         id: json["id"],
         slotOfDay: json["slot_of_day"],
-        startTime: json["start_time"],
-        endTime: json["end_time"],
+        startTime: json["start_time"] == null
+            ? null
+            : TimeOfDay(
+                hour: int.parse(json["start_time"].toString().substring(0, 2)),
+                minute:
+                    int.parse(json["start_time"].toString().substring(3, 5)),
+              ),
+        endTime: json["end_time"] == null
+            ? null
+            : TimeOfDay(
+                hour: int.parse(json["end_time"].toString().substring(0, 2)),
+                minute: int.parse(json["end_time"].toString().substring(3, 5)),
+              ),
       );
 
   Map<String, dynamic> toJson() => {

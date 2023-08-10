@@ -14,6 +14,8 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.size,
     this.title,
     this.titleWidgte,
+    this.bottom,
+    this.height,
   }) {
     assert(!(title == null && titleWidgte == null));
     assert(!(title != null && titleWidgte != null));
@@ -24,6 +26,8 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final Widget? titleWidgte;
   final bool centerTitle;
+  final double? height;
+  final PreferredSizeWidget? bottom;
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -66,9 +70,10 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
             )
           : Container(),
       centerTitle: centerTitle,
+      bottom: bottom,
     );
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(size.height * .075);
+  Size get preferredSize => Size.fromHeight(height ?? size.height * .075);
 }

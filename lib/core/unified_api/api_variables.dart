@@ -67,6 +67,7 @@ class ApiVariables {
   static Uri showHotel({required int hotelId}) => _hotel(
         path: "$hotelId",
       );
+  static Uri bookingHotel() => _hotel(path: "booking/customer");
   ///////////
   ///clinc///
   //////////
@@ -83,6 +84,8 @@ class ApiVariables {
       );
 
   static Uri showClinic(int clinicId) => _clinc(path: "$clinicId");
+
+  static Uri bookingClinic() => _clinc(path: 'booking/customer');
   ////////////////
   ///restaurant///
   ///////////////
@@ -101,6 +104,8 @@ class ApiVariables {
   static Uri showRestuarant({required int restaurantId}) => _restaurant(
         path: "$restaurantId",
       );
+
+  static Uri bookingRestaurant() => _restaurant(path: "booking/customer");
   ////////////////
   ///carOffices///
   ///////////////
@@ -116,6 +121,7 @@ class ApiVariables {
   static Uri showCarOffice(int carOfficeId) => _carOffice(
         path: "$carOfficeId",
       );
+  static Uri bookingCarOffice() => _carOffice(path: "booking/customer");
   //////////////
   ///favorite///
   /////////////
@@ -123,4 +129,18 @@ class ApiVariables {
   static Uri toggleFavorite(int modelId, int modelType) => _userUri(
         path: "favorite/$modelType/model/$modelId/modelNumber/assignFavorite",
       );
+  //////////////////////
+  ///Cutsomer Booking///
+  /////////////////////
+  static Uri _customerBooking(String path) => _userUri(
+        path: "$path/booking/customer",
+      );
+
+  static Uri customerCarOfficeBooking() => _customerBooking("carOffice");
+
+  static Uri customerRestaurantBooking() => _customerBooking("restaurant");
+
+  static Uri customerHotelBooking() => _customerBooking("hotel");
+
+  static Uri customerClinicBooking() => _customerBooking("clinic");
 }

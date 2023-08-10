@@ -24,7 +24,7 @@ class PlaceInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: hasPadding
+      padding: !hasPadding
           ? EdgeInsets.zero
           : EdgeInsets.symmetric(
               horizontal: size.width * .05,

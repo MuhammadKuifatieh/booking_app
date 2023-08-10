@@ -3,7 +3,10 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 
 import '../../../../../core/config/droppable_pro_max.dart';
+import '../../../../../core/enums/categories_enum.dart';
 import '../../../../../core/models/car_office_model.dart';
+import '../../../../../core/presentation/blocs/bloc/favorite_bloc.dart';
+import '../../../../../injection.dart';
 import '../../../data/repositories/car_office_repository_implement.dart';
 import '../../../domain/usecases/get_car_offices.dart';
 
@@ -29,11 +32,17 @@ class CarOfficesBloc extends Bloc<CarOfficesEvent, CarOfficesState> {
         (l) => emit(state.copyWith(
           getCarOfficesStatus: GetCarOfficesStatus.failed,
         )),
-        (r) => emit(state.copyWith(
-          carOffices: r.data!.carOffices,
-          isEndPage: r.data!.carOffices!.length < _perPage,
-          getCarOfficesStatus: GetCarOfficesStatus.succ,
-        )),
+        (r) {
+          emit(state.copyWith(
+            carOffices: r.data!.carOffices,
+            isEndPage: r.data!.carOffices!.length < _perPage,
+            getCarOfficesStatus: GetCarOfficesStatus.succ,
+          ));
+          serviceLocator<FavoriteBloc>().add(AddItemsToFavoriteEvent(
+            items: r.data!.carOffices!,
+            modelType: CategoriesEnum.carOffice.status,
+          ));
+        },
       );
     } else if (!state.isEndPage) {
       emit(state.copyWith(getCarOfficesStatus: GetCarOfficesStatus.loading));
@@ -45,11 +54,17 @@ class CarOfficesBloc extends Bloc<CarOfficesEvent, CarOfficesState> {
         (l) => emit(state.copyWith(
           getCarOfficesStatus: GetCarOfficesStatus.failed,
         )),
-        (r) => emit(state.copyWith(
-          carOffices: List.of(state.carOffices)..addAll(r.data!.carOffices!),
-          isEndPage: r.data!.carOffices!.length < _perPage,
-          getCarOfficesStatus: GetCarOfficesStatus.succ,
-        )),
+        (r) {
+          emit(state.copyWith(
+            carOffices: List.of(state.carOffices)..addAll(r.data!.carOffices!),
+            isEndPage: r.data!.carOffices!.length < _perPage,
+            getCarOfficesStatus: GetCarOfficesStatus.succ,
+          ));
+          serviceLocator<FavoriteBloc>().add(AddItemsToFavoriteEvent(
+            items: r.data!.carOffices!,
+            modelType: CategoriesEnum.carOffice.status,
+          ));
+        },
       );
     }
   }

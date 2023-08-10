@@ -1,4 +1,5 @@
 import 'package:booking_app/core/flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:booking_app/features/customer_booking/presentation/pages/customer_booking_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/config/app_colors.dart';
@@ -61,8 +62,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             ProfileButton(
               size: size,
-              title: "Payment",
-              onTap: () {},
+              title: "My Booking",
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed(CustomerBookingScreen.routeName);
+              },
               svgPath: SvgPaths.payment,
             ),
             ProfileButton(

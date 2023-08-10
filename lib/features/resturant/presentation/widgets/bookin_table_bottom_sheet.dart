@@ -1,23 +1,23 @@
-import 'package:booking_app/core/models/restaurant_model.dart';
 import 'package:collection/collection.dart';
+import 'package:intl/intl.dart' as intl;
 
 import '../../../../core/config/app_colors.dart';
 import '../../../../core/config/app_text_styles.dart';
 import '../../../../core/extensions/gradian.dart';
 import '../../../../core/flutter_neumorphic/flutter_neumorphic.dart';
-import '../../../../core/presentation/pages/paymant_screen.dart';
+import '../../../../core/models/restaurant_model.dart';
 import '../../../../core/presentation/widgets/main_button.dart';
 import '../../../../core/presentation/widgets/main_button_with_border.dart';
 import '../../../../core/presentation/widgets/main_text_failed.dart';
-import '../pages/resturant_screen.dart';
 
 class BookingTableBottomSheet extends StatelessWidget {
   BookingTableBottomSheet({
     super.key,
     required this.size,
     required this.tableTypes,
+    required this.onTap,
   });
-
+  final void Function(int, int, String) onTap;
   final Size size;
   final List<TableTypeModel> tableTypes;
   final ValueNotifier<DateTime> selectedDate = ValueNotifier(DateTime.now());
@@ -169,15 +169,13 @@ class BookingTableBottomSheet extends StatelessWidget {
                       width: 80,
                       height: 15,
                       child: Center(
-                        child: Flexible(
-                          child: Text(
-                            tableTypes[index].name! * 2,
-                            style: AppTextStyles.styleWeight500(
-                              fontSize: size.width * .04,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
+                        child: Text(
+                          tableTypes[index].name! * 2,
+                          style: AppTextStyles.styleWeight500(
+                            fontSize: size.width * .04,
                           ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
                       ),
                     ),
@@ -193,16 +191,12 @@ class BookingTableBottomSheet extends StatelessWidget {
             height: size.width * .15,
             text: "Booking",
             onPressed: () {
-              Navigator.of(context).pushNamed(
-                PaymentScreen.routeName,
-                arguments: PaymentScreenParams(
-                  onTapConfirm: () {
-                    Navigator.of(context).popUntil(
-                      (route) =>
-                          route.settings.name == ResturantScreen.routeName,
-                    );
-                  },
-                ),
+              final date =
+                  intl.DateFormat("yyyy-MM-dd").format(selectedDate.value);
+              onTap(
+                tableTypes[selectedIndex.value].id!,
+                bookingDays.value,
+                date,
               );
             },
           ),

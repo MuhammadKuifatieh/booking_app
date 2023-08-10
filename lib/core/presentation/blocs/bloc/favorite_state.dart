@@ -3,19 +3,19 @@ part of 'favorite_bloc.dart';
 enum FavoriteStatus { init, loading, succ, failed }
 
 class FavoriteState {
-  final Map<String, int> favoriteValues;
+  final List<FavoriteObject> favoriteList;
   final FavoriteStatus favoriteStatus;
   const FavoriteState({
-    this.favoriteValues = const {},
+    this.favoriteList = const [],
     this.favoriteStatus = FavoriteStatus.init,
   });
 
   FavoriteState copyWith({
-    Map<String, int>? favoriteValues,
+    List<FavoriteObject>? favoriteList,
     FavoriteStatus? favoriteStatus,
   }) {
     return FavoriteState(
-      favoriteValues: favoriteValues ?? this.favoriteValues,
+      favoriteList: favoriteList ?? this.favoriteList,
       favoriteStatus: favoriteStatus ?? this.favoriteStatus,
     );
   }

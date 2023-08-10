@@ -9,3 +9,9 @@ class ShowRestaurantEvent extends RestaurantDetailsEvent {
 
   ShowRestaurantEvent(this.restaurantId);
 }
+
+class BookingRestaurantEvent extends RestaurantDetailsEvent {
+  final BookingRestaurantParams params;
+
+  BookingRestaurantEvent(this.params);
+}

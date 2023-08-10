@@ -5,6 +5,6 @@ extension CategoriesExtension on CategoriesEnum {
         CategoriesEnum.restaurant => 1,
         CategoriesEnum.hotel => 2,
         CategoriesEnum.clinic => 3,
-        CategoriesEnum.carOffice => 2,
+        CategoriesEnum.carOffice => 4,
       };
 }

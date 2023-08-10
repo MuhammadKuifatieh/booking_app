@@ -4,18 +4,20 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../core/config/app_colors.dart';
 import '../../../../core/config/app_text_styles.dart';
+import '../../../../core/config/toast.dart';
 import '../../../../core/extensions/gradian.dart';
 import '../../../../core/presentation/pages/paymant_screen.dart';
 import '../../../../core/presentation/widgets/main_app_bar.dart';
 import '../../../../core/presentation/widgets/main_button.dart';
-import '../../../../core/presentation/widgets/main_button_with_border.dart';
 import '../../../../core/presentation/widgets/main_error_widget.dart';
 import '../../../../core/presentation/widgets/main_loading_widget.dart';
 import '../../../../core/presentation/widgets/map_card_widget.dart';
 import '../../../../core/presentation/widgets/network_image.dart';
 import '../../../../core/presentation/widgets/place_info_widget.dart';
+import '../../../main/presentation/pages/main_screen.dart';
+import '../../domain/usecases/booking_clinic.dart';
 import '../bloc/clinic_details/clinic_details_bloc.dart';
-import '../widgets/calender.dart';
+import '../widgets/booking_clinic_bottom_sheet.dart';
 import 'clinic_screen.dart';
 
 class ClinicDetailsScreen extends StatefulWidget {
@@ -69,6 +71,20 @@ class _ClinicDetailsScreenState extends State<ClinicDetailsScreen> {
               for (var index in state.clinic!.placeContact!.openDays!) {
                 openDays.add(allOpenDays[index]);
               }
+            }
+            if (state.bookingClinicStatus == BookingClinicStatus.loading) {
+              Toast.showLoading();
+            } else if (state.bookingClinicStatus ==
+                BookingClinicStatus.failed) {
+              Toast.closeAllLoading();
+              Toast.showText(text: "something wrong");
+              Navigator.of(context).pop();
+            } else if (state.bookingClinicStatus == BookingClinicStatus.succ) {
+              Toast.closeAllLoading();
+              Navigator.of(context).popUntil(
+                (route) => (route.settings.name == ClinicScreen.routeName ||
+                    route.settings.name == MainScreen.routeName),
+              );
             }
           },
           builder: (context, state) {
@@ -309,9 +325,26 @@ class _ClinicDetailsScreenState extends State<ClinicDetailsScreen> {
                               isScrollControlled: true,
                               backgroundColor: Colors.transparent,
                               constraints:
-                                  BoxConstraints(maxHeight: size.height * .8),
-                              builder: (_) => NewWidget(
+                                  BoxConstraints(maxHeight: size.height * .725),
+                              builder: (_) => BookingClinicBottomSheet(
                                 size: size,
+                                clinicSessions: state.clinic!.clinicSessions!,
+                                onTap: (clinicSessionId, date) {
+                                  Navigator.of(context)
+                                      .pushNamed(PaymentScreen.routeName,
+                                          arguments: PaymentScreenParams(
+                                    onTapConfirm: () {
+                                      clinicDetailsBloc.add(
+                                        BookingClinicEvent(
+                                          BookingClinicParams(
+                                            date: date,
+                                            clinicSessionId: clinicSessionId,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ));
+                                },
                               ),
                             );
                           },
@@ -325,150 +358,6 @@ class _ClinicDetailsScreenState extends State<ClinicDetailsScreen> {
             );
           },
         ),
-      ),
-    );
-  }
-}
-
-class NewWidget extends StatelessWidget {
-  NewWidget({
-    super.key,
-    required this.size,
-  });
-  final Size size;
-  final ValueNotifier<int> hours = ValueNotifier(10);
-  final ValueNotifier<int> minute = ValueNotifier(00);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
-        color: AppColors.backgroundColor,
-      ),
-      child: Column(
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(24.0),
-            child: CalendarWidget(),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                children: [
-                  Text(
-                    "Hours",
-                    style: AppTextStyles.styleWeight900(
-                      fontSize: size.width * .05,
-                    ),
-                  ),
-                  MainButtonWithBorder(
-                    size: size,
-                    width: size.width * .1,
-                    height: size.width * .1,
-                    text: "+",
-                    onPressed: () {
-                      if (hours.value < 23) {
-                        hours.value += 30;
-                      } else {
-                        hours.value = 0;
-                      }
-                    },
-                  ),
-                  ValueListenableBuilder<int>(
-                    valueListenable: hours,
-                    builder: (context, value, _) {
-                      return Text(
-                        "$value".padLeft(2, "0"),
-                        style: AppTextStyles.styleWeight900(
-                            fontSize: size.width * .06),
-                      );
-                    },
-                  ),
-                  MainButtonWithBorder(
-                    size: size,
-                    width: size.width * .1,
-                    height: size.width * .1,
-                    text: "-",
-                    onPressed: () {
-                      if (hours.value > 0) {
-                        hours.value--;
-                      } else {
-                        hours.value = 23;
-                      }
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(width: 20),
-              Column(
-                children: [
-                  Text(
-                    "Minutes",
-                    style: AppTextStyles.styleWeight900(
-                      fontSize: size.width * .05,
-                    ),
-                  ),
-                  MainButtonWithBorder(
-                    size: size,
-                    width: size.width * .1,
-                    height: size.width * .1,
-                    text: "+",
-                    onPressed: () {
-                      if (minute.value < 45) {
-                        minute.value += 15;
-                      } else {
-                        minute.value = 0;
-                      }
-                    },
-                  ),
-                  ValueListenableBuilder<int>(
-                    valueListenable: minute,
-                    builder: (context, value, _) {
-                      return Text(
-                        "$value".padLeft(2, "0"),
-                        style: AppTextStyles.styleWeight900(
-                            fontSize: size.width * .06),
-                      );
-                    },
-                  ),
-                  MainButtonWithBorder(
-                    size: size,
-                    width: size.width * .1,
-                    height: size.width * .1,
-                    text: "-",
-                    onPressed: () {
-                      if (minute.value > 0) {
-                        minute.value -= 15;
-                      } else {
-                        minute.value = 45;
-                      }
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const Spacer(),
-          MainButton(
-            size: size,
-            width: size.width * .8,
-            height: size.width * .15,
-            text: "Confirm Booking",
-            onPressed: () {
-              Navigator.of(context).pushNamed(PaymentScreen.routeName,
-                  arguments: PaymentScreenParams(
-                onTapConfirm: () {
-                  Navigator.of(context).popUntil(
-                    (route) => route.settings.name == ClinicScreen.routeName,
-                  );
-                },
-              ));
-            },
-          ),
-          const SizedBox(height: 25)
-        ],
       ),
     );
   }

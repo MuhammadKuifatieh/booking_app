@@ -1,3 +1,6 @@
+import '../../../../core/models/no_response_model.dart';
+import '../../../../core/unified_api/post_api.dart';
+
 import '../../../../core/config/typedef.dart';
 import '../../../../core/unified_api/api_variables.dart';
 import '../../../../core/unified_api/get_api.dart';
@@ -30,6 +33,16 @@ class RemoteClinicDataSource {
       fromJson: showClinicsResponseFromJson,
     );
     final result = await getApi.callRequest();
+    return result;
+  }
+
+  Future<NoResponse> bookingClinic(BodyMap body) async {
+    final PostApi postApi = PostApi(
+      uri: ApiVariables.bookingClinic(),
+      body: body,
+      fromJson: noResponseFromJson,
+    );
+    final result = await postApi.callRequest();
     return result;
   }
 }

@@ -1,3 +1,5 @@
+import 'package:booking_app/core/enums/categories_enum.dart';
+import 'package:booking_app/features/car_office/presentation/pages/car_office_details_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/config/app_colors.dart';
@@ -10,18 +12,24 @@ class CarOfficeCard extends StatelessWidget {
   const CarOfficeCard({
     super.key,
     required this.size,
-    required this.onTap,
     required this.carOffice,
   });
 
   final Size size;
-  final VoidCallback onTap;
   final CarOfficeModel carOffice;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        Navigator.of(context).pushNamed(
+          CarOfficeDetailsScreen.routeName,
+          arguments: CarOfficeDetailsScreenParams(
+            carOfficeId: carOffice.id!,
+            carOfficeName: carOffice.name!,
+          ),
+        );
+      },
       child: Padding(
         padding: EdgeInsets.only(bottom: size.width * .05),
         child: Row(
@@ -40,8 +48,8 @@ class CarOfficeCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: FavoriteButton(
-                    onTap: () {},
-                    isFavorite: carOffice.isFavorite!,
+                    modelId: carOffice.id!,
+                    modelType: CategoriesEnum.carOffice,
                   ),
                 ),
               ],

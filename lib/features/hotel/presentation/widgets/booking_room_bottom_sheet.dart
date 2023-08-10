@@ -1,24 +1,24 @@
-
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart' as intl;
 
 import '../../../../core/config/app_colors.dart';
 import '../../../../core/config/app_text_styles.dart';
 import '../../../../core/extensions/gradian.dart';
-import '../../../../core/presentation/pages/paymant_screen.dart';
 import '../../../../core/presentation/widgets/main_button.dart';
 import '../../../../core/presentation/widgets/main_button_with_border.dart';
 import '../../../../core/presentation/widgets/main_text_failed.dart';
-import '../pages/hotel_screen.dart';
 
 class BookingRoomBottomSheet extends StatelessWidget {
   BookingRoomBottomSheet({
     super.key,
     required this.size,
+    required this.onTap,
   });
 
   final Size size;
   final ValueNotifier<DateTime> selectedDate = ValueNotifier(DateTime.now());
   final ValueNotifier<int> bookingDays = ValueNotifier(1);
+  final void Function(int, String) onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -139,16 +139,9 @@ class BookingRoomBottomSheet extends StatelessWidget {
             height: size.width * .15,
             text: "Booking",
             onPressed: () {
-              Navigator.of(context).pushNamed(
-                PaymentScreen.routeName,
-                arguments: PaymentScreenParams(
-                  onTapConfirm: () {
-                    Navigator.of(context).popUntil(
-                      (route) => route.settings.name == HotelScreen.routeName,
-                    );
-                  },
-                ),
-              );
+              final String date =
+                  intl.DateFormat("yyyy-MM-dd").format(selectedDate.value);
+              onTap(bookingDays.value, date);
             },
           ),
         ],

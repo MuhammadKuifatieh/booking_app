@@ -1,14 +1,13 @@
-import 'package:booking_app/core/models/clinic_specialization_response.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/config/app_text_styles.dart';
 import '../../../../core/flutter_neumorphic/flutter_neumorphic.dart';
+import '../../../../core/models/clinic_specialization_response.dart';
 import '../../../../core/presentation/widgets/main_app_bar.dart';
 import '../../../../core/presentation/widgets/main_error_widget.dart';
 import '../../../../core/presentation/widgets/main_loading_widget.dart';
 import '../bloc/clinics/clinics_bloc.dart';
 import '../widgets/clinic_card.dart';
-import 'clicnic_detailes_screen.dart';
 
 class ClinicScreen extends StatefulWidget {
   static const routeName = "clinic_screen";
@@ -168,13 +167,6 @@ class _ClinicScreenState extends State<ClinicScreen> {
                                   return ClinicCard(
                                     size: size,
                                     clinic: state.clinics[index],
-                                    onTap: () {
-                                      Navigator.of(context).pushNamed(
-                                          ClinicDetailsScreen.routeName,
-                                          arguments: ClinicDetailsScreenParams(
-                                            clinicId: state.clinics[index].id!,
-                                          ));
-                                    },
                                   );
                                 },
                               ),

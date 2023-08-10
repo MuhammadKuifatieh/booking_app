@@ -1,10 +1,10 @@
-import 'package:booking_app/core/presentation/widgets/main_error_widget.dart';
-import 'package:booking_app/core/presentation/widgets/main_loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/presentation/widgets/main_app_bar.dart';
-import '../bloc/bloc/car_offices_bloc.dart';
+import '../../../../core/presentation/widgets/main_error_widget.dart';
+import '../../../../core/presentation/widgets/main_loading_widget.dart';
+import '../bloc/car_offices/car_offices_bloc.dart';
 import '../widgets/car_office_card.dart';
 
 class CarOfficeScreen extends StatefulWidget {
@@ -68,8 +68,7 @@ class _CarOfficeScreenState extends State<CarOfficeScreen> {
                 }
                 return CarOfficeCard(
                   size: size,
-                  carOffice:state.carOffices[index],
-                  onTap: () {},
+                  carOffice: state.carOffices[index],
                 );
               },
             );

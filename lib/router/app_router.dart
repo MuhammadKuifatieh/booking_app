@@ -1,3 +1,6 @@
+import 'package:booking_app/core/presentation/pages/map_pick_location.dart';
+import 'package:booking_app/features/car_office/presentation/pages/car_office_details_screen.dart';
+import 'package:booking_app/features/customer_booking/presentation/pages/customer_booking_screen.dart';
 import 'package:booking_app/features/search/presentation/pages/show_location_screen.dart';
 import 'package:booking_app/features/splash/presentation/pages/on_boarder_screen.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +38,11 @@ class AppRouter {
       case LoginScreen.routeName:
         return MaterialPageRoute(
           builder: (_) => const LoginScreen(),
+          settings: routeSettings,
+        );
+      case MapPickLocation.routeName:
+        return MaterialPageRoute(
+          builder: (_) => const MapPickLocation(),
           settings: routeSettings,
         );
       case ShowLocationScreen.routeName:
@@ -105,15 +113,22 @@ class AppRouter {
             arg: routeSettings.arguments as RestaurantDetailsScreenParams,
           ),
         );
+      case ClinicDetailsScreen.routeName:
+        return MaterialPageRoute(
+          builder: (_) => ClinicDetailsScreen(
+            arg: routeSettings.arguments as ClinicDetailsScreenParams,
+          ),
+          settings: routeSettings,
+        );
       case CarOfficeScreen.routeName:
         return MaterialPageRoute(
           builder: (_) => const CarOfficeScreen(),
           settings: routeSettings,
         );
-      case ClinicDetailsScreen.routeName:
+      case CarOfficeDetailsScreen.routeName:
         return MaterialPageRoute(
-          builder: (_) => ClinicDetailsScreen(
-            arg: routeSettings.arguments as ClinicDetailsScreenParams,
+          builder: (_) => CarOfficeDetailsScreen(
+            arg: routeSettings.arguments as CarOfficeDetailsScreenParams,
           ),
           settings: routeSettings,
         );
@@ -130,6 +145,11 @@ class AppRouter {
       case ProfileScreen.routeName:
         return MaterialPageRoute(
           builder: (_) => const ProfileScreen(),
+          settings: routeSettings,
+        );
+      case CustomerBookingScreen.routeName:
+        return MaterialPageRoute(
+          builder: (_) => const CustomerBookingScreen(),
           settings: routeSettings,
         );
     }
