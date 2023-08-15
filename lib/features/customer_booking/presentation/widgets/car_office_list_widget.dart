@@ -7,8 +7,8 @@ import '../../../../core/presentation/widgets/main_loading_widget.dart';
 import '../../data/models/car_office_booking_customer_response.dart';
 import '../pages/customer_booking_screen.dart';
 
-class CarOfficeListWidget extends StatelessWidget {
-  const CarOfficeListWidget({
+class CarOfficeCustomerBookingListWidget extends StatelessWidget {
+  const CarOfficeCustomerBookingListWidget({
     super.key,
     required this.carOffices,
     required this.isLoading,

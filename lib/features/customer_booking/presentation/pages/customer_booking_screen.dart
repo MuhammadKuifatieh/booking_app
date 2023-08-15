@@ -1,4 +1,6 @@
 import 'package:booking_app/features/customer_booking/presentation/widgets/clinic_list_widget.dart';
+import 'package:booking_app/features/customer_booking/presentation/widgets/hotel_list_widget.dart';
+import 'package:booking_app/features/customer_booking/presentation/widgets/restaurant_list_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/config/app_colors.dart';
@@ -82,7 +84,7 @@ class _CustomerBookingScreenState extends State<CustomerBookingScreen>
             return TabBarView(
               controller: tabController,
               children: [
-                CarOfficeListWidget(
+                CarOfficeCustomerBookingListWidget(
                     carOffices: state.carOffices,
                     isLoading: (state.getCustomerCarOfficeStatus ==
                             GetCustomerCarOfficeStatus.loading ||
@@ -93,7 +95,7 @@ class _CustomerBookingScreenState extends State<CustomerBookingScreen>
                     onTapRetry: () {
                       customerBookingBloc.add(GetCustomerCarOfficeEvent());
                     }),
-                ClinicListWidget(
+                ClinicCustomerBookingListWidget(
                   clinicOffices: state.clinics,
                   isLoading: (state.getCustomerClinicStatus ==
                           GetCustomerClinicStatus.loading ||
@@ -105,8 +107,30 @@ class _CustomerBookingScreenState extends State<CustomerBookingScreen>
                     customerBookingBloc.add(GetCustomerClinicEvent());
                   },
                 ),
-                Column(children: []),
-                Column(children: []),
+                HotelCustomerBookingListWidget(
+                  hotel: state.hotels,
+                  isLoading: state.getCustomerHotelStatus ==
+                          GetCustomerHotelStatus.init ||
+                      state.getCustomerHotelStatus ==
+                          GetCustomerHotelStatus.loading,
+                  isFailed: state.getCustomerHotelStatus ==
+                      GetCustomerHotelStatus.faild,
+                  onTapRetry: () {
+                    customerBookingBloc.add(GetCustomerHotelEvent());
+                  },
+                ),
+                RestaurantCustomerBookingListWidget(
+                  restaurant: state.restaurants,
+                  isLoading: state.getCustomerRestaurantStatus ==
+                          GetCustomerRestaurantStatus.init ||
+                      state.getCustomerRestaurantStatus ==
+                          GetCustomerRestaurantStatus.loading,
+                  isFailed: state.getCustomerRestaurantStatus ==
+                      GetCustomerRestaurantStatus.faild,
+                  onTapRetry: () {
+                    customerBookingBloc.add(GetCustomerRestaurantEvent());
+                  },
+                )
               ],
             );
           },

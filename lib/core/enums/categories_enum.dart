@@ -7,4 +7,11 @@ extension CategoriesExtension on CategoriesEnum {
         CategoriesEnum.clinic => 3,
         CategoriesEnum.carOffice => 4,
       };
+
+  String get name => switch (this) {
+        CategoriesEnum.restaurant => "Restaurant",
+        CategoriesEnum.hotel => "Hotel",
+        CategoriesEnum.clinic => "Clinic",
+        CategoriesEnum.carOffice => "Car Offer",
+      };
 }

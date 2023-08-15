@@ -2,11 +2,14 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 
+import '../../../../core/enums/categories_enum.dart';
 import '../../../../core/models/car_office_model.dart';
 import '../../../../core/models/clinic_model.dart';
 import '../../../../core/models/hotel_model.dart';
 import '../../../../core/models/restaurant_model.dart';
+import '../../../../core/presentation/blocs/bloc/favorite_bloc.dart';
 import '../../../../core/usecase/use_case.dart';
+import '../../../../injection.dart';
 import '../../data/repositories/get_favorite_repository_implement.dart';
 import '../../domain/usecases/get_favorite_car_offices.dart';
 import '../../domain/usecases/get_favorite_clinics.dart';
@@ -44,10 +47,16 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     result.fold(
       (l) => emit(state.copyWith(
           getFavoriteHotelsStatus: GetFavoriteHotelsStatus.failed)),
-      (r) => emit(state.copyWith(
-        hotels: r.data!.hotels,
-        getFavoriteHotelsStatus: GetFavoriteHotelsStatus.succ,
-      )),
+      (r) {
+        emit(state.copyWith(
+          hotels: r.data!.hotels,
+          getFavoriteHotelsStatus: GetFavoriteHotelsStatus.succ,
+        ));
+        serviceLocator<FavoriteBloc>().add(AddItemsToFavoriteEvent(
+          items: r.data!.hotels!,
+          modelType: CategoriesEnum.hotel.status,
+        ));
+      },
     );
   }
 
@@ -59,10 +68,16 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     result.fold(
       (l) => emit(state.copyWith(
           getFavoriteRestaurantsStatus: GetFavoriteRestaurantsStatus.failed)),
-      (r) => emit(state.copyWith(
-        getFavoriteRestaurantsStatus: GetFavoriteRestaurantsStatus.succ,
-        restaurants: r.data!.restaurants,
-      )),
+      (r) {
+        emit(state.copyWith(
+          getFavoriteRestaurantsStatus: GetFavoriteRestaurantsStatus.succ,
+          restaurants: r.data!.restaurants,
+        ));
+        serviceLocator<FavoriteBloc>().add(AddItemsToFavoriteEvent(
+          items: r.data!.restaurants!,
+          modelType: CategoriesEnum.restaurant.status,
+        ));
+      },
     );
   }
 
@@ -74,10 +89,16 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     result.fold(
       (l) => emit(state.copyWith(
           getFavoriteClinicStatus: GetFavoriteClinicStatus.failed)),
-      (r) => emit(state.copyWith(
-        clinics: r.data!.clinics,
-        getFavoriteClinicStatus: GetFavoriteClinicStatus.succ,
-      )),
+      (r) {
+        emit(state.copyWith(
+          clinics: r.data!.clinics,
+          getFavoriteClinicStatus: GetFavoriteClinicStatus.succ,
+        ));
+        serviceLocator<FavoriteBloc>().add(AddItemsToFavoriteEvent(
+          items: r.data!.clinics!,
+          modelType: CategoriesEnum.clinic.status,
+        ));
+      },
     );
   }
 
@@ -89,10 +110,16 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     result.fold(
       (l) => emit(state.copyWith(
           getFavoriteCarOfficesStatus: GetFavoriteCarOfficesStatus.failed)),
-      (r) => emit(state.copyWith(
-        carOffices: r.data!.carOffices,
-        getFavoriteCarOfficesStatus: GetFavoriteCarOfficesStatus.succ,
-      )),
+      (r) {
+        emit(state.copyWith(
+          carOffices: r.data!.carOffices,
+          getFavoriteCarOfficesStatus: GetFavoriteCarOfficesStatus.succ,
+        ));
+        serviceLocator<FavoriteBloc>().add(AddItemsToFavoriteEvent(
+          items: r.data!.carOffices!,
+          modelType: CategoriesEnum.carOffice.status,
+        ));
+      },
     );
   }
 }

@@ -104,11 +104,15 @@ class LocationModel {
 
 extension ListLocation on List<LocationModel> {
   addAllLocation(List list, CategoriesEnum categoriesType) {
+    log(length.toString());
+    List<LocationModel> newList = [];
     for (var item in this) {
-      if (item.categoriesEnum == categoriesType) {
-        remove(item);
+      if (item.categoriesEnum != categoriesType) {
+        newList.add(item);
       }
     }
+    clear();
+    addAll(newList);
     for (var item in list) {
       add(
         LocationModel(

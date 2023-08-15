@@ -1,23 +1,23 @@
 import 'dart:developer';
 
-import 'package:booking_app/features/customer_booking/presentation/pages/customer_booking_screen.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/config/app_text_styles.dart';
 import '../../../../core/flutter_neumorphic/flutter_neumorphic.dart';
 import '../../../../core/presentation/widgets/main_error_widget.dart';
 import '../../../../core/presentation/widgets/main_loading_widget.dart';
-import '../../data/models/clinic_booking_customer_response.dart';
+import '../../data/models/hotel_booking_customer_response.dart';
+import '../pages/customer_booking_screen.dart';
 
-class ClinicCustomerBookingListWidget extends StatelessWidget {
-  const ClinicCustomerBookingListWidget({
+class HotelCustomerBookingListWidget extends StatelessWidget {
+  const HotelCustomerBookingListWidget({
     super.key,
-    required this.clinicOffices,
+    required this.hotel,
     required this.isLoading,
     required this.isFailed,
     required this.onTapRetry,
   });
-  final List<CusomerClinicBookingModel> clinicOffices;
+  final List<CustomerHotelBookingModel> hotel;
   final bool isLoading;
   final bool isFailed;
   final VoidCallback onTapRetry;
@@ -31,7 +31,7 @@ class ClinicCustomerBookingListWidget extends StatelessWidget {
                 size: MediaQuery.sizeOf(context),
                 onTap: onTapRetry,
               )
-            : clinicOffices.isEmpty
+            : hotel.isEmpty
                 ? Center(
                     child: Text(
                       "No BooKing",
@@ -39,7 +39,7 @@ class ClinicCustomerBookingListWidget extends StatelessWidget {
                     ),
                   )
                 : ListView.builder(
-                    itemCount: clinicOffices.length,
+                    itemCount: hotel.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -57,8 +57,22 @@ class ClinicCustomerBookingListWidget extends StatelessWidget {
                                   ),
                                   Text(
                                     DateFormat("yyyy/MM/dd").format(
-                                      clinicOffices[index].bookingDatetime!,
+                                      hotel[index].bookingDatetime!,
                                     ),
+                                    style: AppTextStyles.styleWeight500(
+                                        fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Booking duration : ",
+                                    style: AppTextStyles.styleWeight500(
+                                        fontSize: 16),
+                                  ),
+                                  Text(
+                                    hotel[index].escortsNumber.toString(),
                                     style: AppTextStyles.styleWeight500(
                                         fontSize: 16),
                                   ),
@@ -73,7 +87,7 @@ class ClinicCustomerBookingListWidget extends StatelessWidget {
                                   ),
                                   Text(
                                     StatusEnumExtention.getByStatus(
-                                        clinicOffices[index].status!)!,
+                                        hotel[index].status!)!,
                                     style: AppTextStyles.styleWeight500(
                                         fontSize: 16),
                                   ),

@@ -56,7 +56,7 @@ class _ShowLocationScreenState extends State<ShowLocationScreen>
               widget.arg.location.latitude,
               widget.arg.location.longitude,
             ),
-            zoom: 16.4746,
+            zoom: 6.5,
           );
           currentLocation = _initialCameraPosotion.target;
           return Stack(
@@ -78,7 +78,7 @@ class _ShowLocationScreenState extends State<ShowLocationScreen>
                         position: e.latLng,
                         infoWindow: InfoWindow(
                           title: e.name,
-                          snippet: '',
+                          snippet: e.categoriesEnum.name,
                         )))
                     .toSet()
                 // Marker(
@@ -109,7 +109,7 @@ class _ShowLocationScreenState extends State<ShowLocationScreen>
                                 myLocation.latitude,
                                 myLocation.longitude,
                               ),
-                              zoom: 10,
+                              zoom: 6.5,
                             ),
                           ),
                         );
