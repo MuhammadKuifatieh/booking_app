@@ -16,7 +16,8 @@ class BookingRoomBottomSheet extends StatelessWidget {
   });
 
   final Size size;
-  final ValueNotifier<DateTime> selectedDate = ValueNotifier(DateTime.now());
+  final ValueNotifier<DateTime> selectedDate =
+      ValueNotifier(DateTime.now().add(const Duration(days: 1)));
   final ValueNotifier<int> bookingDays = ValueNotifier(1);
   final void Function(int, String) onTap;
 
@@ -55,7 +56,7 @@ class BookingRoomBottomSheet extends StatelessWidget {
                     showDatePicker(
                       context: context,
                       initialDate: selectedDate.value,
-                      firstDate: DateTime.now(),
+                      firstDate: DateTime.now().add(const Duration(days: 1)),
                       lastDate: DateTime.now().add(
                         const Duration(days: 365),
                       ),

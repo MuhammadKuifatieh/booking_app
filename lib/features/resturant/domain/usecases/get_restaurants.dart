@@ -20,18 +20,21 @@ class GetRestaurantsParams with Params {
   final int? perPage;
   final String? name;
   final int? cityId;
+  final int ?userId;
 
-  GetRestaurantsParams({
+  GetRestaurantsParams( {
     this.page,
     this.perPage,
     this.name,
     this.cityId,
+    this.userId,
   });
   @override
   QueryParams getParams() => {
         if (page != null) "page": page.toString(),
         if (perPage != null) "perPage": perPage.toString(),
-        if (cityId != null) "filter[city_id]": cityId.toString(),
+        if (cityId != null&& cityId! > 0) "filter[city_id]": cityId.toString(),
         if (name != null) "filter[name]": name.toString(),
+        if(userId!=null)"filter[user_id]":userId.toString()
       };
 }

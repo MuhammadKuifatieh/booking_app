@@ -143,4 +143,32 @@ class ApiVariables {
   static Uri customerHotelBooking() => _customerBooking("hotel");
 
   static Uri customerClinicBooking() => _customerBooking("clinic");
+
+  //////////////
+  ///favorite///
+  /////////////
+  static Uri _favorite({required String path, QueryParams? params}) => _userUri(
+        path: "favorite/$path",
+        queryParameters: params,
+      );
+
+  static Uri getFavoriteRestaurant(QueryParams? params) => _favorite(
+        path: "getRestaurantFavorites",
+        params: params,
+      );
+
+  static Uri getFavoriteHotels(QueryParams? params) => _favorite(
+        path: "getHotelFavorites",
+        params: params,
+      );
+
+  static Uri getFavoriteCarOffices(QueryParams? params) => _favorite(
+        path: "getCarOfficeFavorites",
+        params: params,
+      );
+
+  static Uri getFavoriteClinic(QueryParams? params) => _favorite(
+        path: "getClinicFavorites",
+        params: params,
+      );
 }

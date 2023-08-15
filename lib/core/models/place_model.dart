@@ -44,7 +44,8 @@ class PlaceContactModel {
         openDays: openDays ?? this.openDays,
       );
 
-  factory PlaceContactModel.fromJson(Map<String, dynamic> json) => PlaceContactModel(
+  factory PlaceContactModel.fromJson(Map<String, dynamic> json) =>
+      PlaceContactModel(
         id: json["id"],
         address: json["address"],
         phoneNumber: json["phone_number"],
@@ -57,7 +58,12 @@ class PlaceContactModel {
             json["close_at"] == null ? null : DateTime.parse(json["close_at"]),
         openDays: json["open_days"] == null
             ? []
-            : List<int>.from(json["open_days"]!.map((x) => x)),
+            : List<int>.from(json["open_days"]!.map((x) {
+                if (x is String) {
+                  return int.parse(x);
+                }
+                return x;
+              })),
       );
 
   Map<String, dynamic> toJson() => {

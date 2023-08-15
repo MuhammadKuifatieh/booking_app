@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:booking_app/features/search/presentation/bloc/bloc/search_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -69,12 +70,22 @@ class _ShowLocationScreenState extends State<ShowLocationScreen>
                 onCameraMove: (posotion) {
                   currentLocation = posotion.target;
                 },
-                markers: {
-                  Marker(
-                    markerId: const MarkerId("1"),
-                    position: widget.arg.location,
-                  ),
-                },
+                markers: widget.arg.locations
+                    .map((e) => Marker(
+                        markerId: MarkerId(
+                          e.toString(),
+                        ),
+                        position: e.latLng,
+                        infoWindow: InfoWindow(
+                          title: e.name,
+                          snippet: '',
+                        )))
+                    .toSet()
+                // Marker(
+                //   markerId: const MarkerId("1"),
+                //   position: widget.arg.location,
+                // ),
+                ,
                 zoomControlsEnabled: false,
               ),
               // const SizedBox(
@@ -133,6 +144,10 @@ class _ShowLocationScreenState extends State<ShowLocationScreen>
 
 class ShowLocationScreenParams {
   final LatLng location;
+  final List<LocationModel> locations;
 
-  ShowLocationScreenParams({required this.location});
+  ShowLocationScreenParams({
+    required this.location,
+    required this.locations,
+  });
 }

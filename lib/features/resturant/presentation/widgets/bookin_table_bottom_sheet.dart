@@ -20,7 +20,8 @@ class BookingTableBottomSheet extends StatelessWidget {
   final void Function(int, int, String) onTap;
   final Size size;
   final List<TableTypeModel> tableTypes;
-  final ValueNotifier<DateTime> selectedDate = ValueNotifier(DateTime.now());
+  final ValueNotifier<DateTime> selectedDate =
+      ValueNotifier(DateTime.now().add(const Duration(days: 1)));
   final ValueNotifier<int> bookingDays = ValueNotifier(1);
 
   final ValueNotifier<int> selectedIndex = ValueNotifier(0);
@@ -59,7 +60,7 @@ class BookingTableBottomSheet extends StatelessWidget {
                     showDatePicker(
                       context: context,
                       initialDate: selectedDate.value,
-                      firstDate: DateTime.now(),
+                      firstDate: DateTime.now().add(const Duration(days: 1)),
                       lastDate: DateTime.now().add(
                         const Duration(days: 365),
                       ),

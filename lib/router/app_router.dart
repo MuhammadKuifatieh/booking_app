@@ -1,6 +1,7 @@
 import 'package:booking_app/core/presentation/pages/map_pick_location.dart';
 import 'package:booking_app/features/car_office/presentation/pages/car_office_details_screen.dart';
 import 'package:booking_app/features/customer_booking/presentation/pages/customer_booking_screen.dart';
+import 'package:booking_app/features/favorites/presentation/pages/my_favorites_screen.dart';
 import 'package:booking_app/features/search/presentation/pages/show_location_screen.dart';
 import 'package:booking_app/features/splash/presentation/pages/on_boarder_screen.dart';
 import 'package:flutter/material.dart';
@@ -150,6 +151,11 @@ class AppRouter {
       case CustomerBookingScreen.routeName:
         return MaterialPageRoute(
           builder: (_) => const CustomerBookingScreen(),
+          settings: routeSettings,
+        );
+      case MyFavoritesScreen.routeName:
+        return MaterialPageRoute(
+          builder: (_) => const MyFavoritesScreen(),
           settings: routeSettings,
         );
     }

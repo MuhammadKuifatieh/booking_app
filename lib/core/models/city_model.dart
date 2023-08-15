@@ -1,4 +1,3 @@
-
 class CityModel {
   int? id;
   String? name;
@@ -26,4 +25,14 @@ class CityModel {
         "id": id,
         "name": name,
       };
+
+  @override
+  bool operator ==(covariant CityModel other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id && other.name == name;
+  }
+
+  @override
+  int get hashCode => id.hashCode ^ name.hashCode;
 }

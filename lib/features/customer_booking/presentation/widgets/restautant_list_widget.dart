@@ -1,29 +1,26 @@
-import 'dart:developer';
-
-import 'package:booking_app/features/customer_booking/presentation/pages/customer_booking_screen.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/config/app_text_styles.dart';
 import '../../../../core/flutter_neumorphic/flutter_neumorphic.dart';
 import '../../../../core/presentation/widgets/main_error_widget.dart';
 import '../../../../core/presentation/widgets/main_loading_widget.dart';
-import '../../data/models/clinic_booking_customer_response.dart';
+import '../../data/models/restaurant_booking_customer_response.dart';
+import '../pages/customer_booking_screen.dart';
 
-class ClinicListWidget extends StatelessWidget {
-  const ClinicListWidget({
-    super.key,
-    required this.clinicOffices,
-    required this.isLoading,
-    required this.isFailed,
-    required this.onTapRetry,
-  });
-  final List<CusomerClinicBookingModel> clinicOffices;
+class RestaurantListWidget extends StatelessWidget {
+  const RestaurantListWidget(
+      {super.key,
+      required this.restaurant,
+      required this.isLoading,
+      required this.isFailed,
+      required this.onTapRetry});
+  final List<CustomerRestaurantBookingModel> restaurant;
   final bool isLoading;
   final bool isFailed;
   final VoidCallback onTapRetry;
+
   @override
   Widget build(BuildContext context) {
-    log(isFailed.toString());
     return isLoading
         ? const MainLoadingWidget()
         : isFailed
@@ -31,7 +28,7 @@ class ClinicListWidget extends StatelessWidget {
                 size: MediaQuery.sizeOf(context),
                 onTap: onTapRetry,
               )
-            : clinicOffices.isEmpty
+            : restaurant.isEmpty
                 ? Center(
                     child: Text(
                       "No BooKing",
@@ -39,7 +36,7 @@ class ClinicListWidget extends StatelessWidget {
                     ),
                   )
                 : ListView.builder(
-                    itemCount: clinicOffices.length,
+                    itemCount: restaurant.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -57,8 +54,22 @@ class ClinicListWidget extends StatelessWidget {
                                   ),
                                   Text(
                                     DateFormat("yyyy/MM/dd").format(
-                                      clinicOffices[index].bookingDatetime!,
+                                      restaurant[index].bookingDatetime!,
                                     ),
+                                    style: AppTextStyles.styleWeight500(
+                                        fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Number of day booking : ",
+                                    style: AppTextStyles.styleWeight500(
+                                        fontSize: 16),
+                                  ),
+                                  Text(
+                                    restaurant[index].escortsNumber.toString(),
                                     style: AppTextStyles.styleWeight500(
                                         fontSize: 16),
                                   ),
@@ -73,7 +84,7 @@ class ClinicListWidget extends StatelessWidget {
                                   ),
                                   Text(
                                     StatusEnumExtention.getByStatus(
-                                        clinicOffices[index].status!)!,
+                                        restaurant[index].status!)!,
                                     style: AppTextStyles.styleWeight500(
                                         fontSize: 16),
                                   ),

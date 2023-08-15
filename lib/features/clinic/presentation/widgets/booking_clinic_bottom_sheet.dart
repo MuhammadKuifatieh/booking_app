@@ -19,7 +19,7 @@ class BookingClinicBottomSheet extends StatelessWidget {
   final void Function(int, String) onTap;
   final List<ClinicSessionModel> clinicSessions;
   final ValueNotifier<int> selectedIndex = ValueNotifier(0);
-  final ValueNotifier<DateTime> dateValue = ValueNotifier(DateTime.now());
+  final ValueNotifier<DateTime> dateValue = ValueNotifier(DateTime.now().add(const Duration(days: 1)));
 
   @override
   Widget build(BuildContext context) {

@@ -63,8 +63,8 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                 );
               },
             ),
-            firstDay: DateTime.now(),
-            lastDay: DateTime.now().add(const Duration(days: 365)),
+            firstDay: DateTime.now().add(const Duration(days: 1)),
+            lastDay: DateTime.now().add(const Duration(days: 366)),
             focusedDay: value,
             currentDay: value,
           );

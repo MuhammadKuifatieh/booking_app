@@ -47,7 +47,8 @@ class _ResturantScreenState extends State<ResturantScreen> {
                 state.restaurants.isEmpty) {
               return const MainLoadingWidget();
             } else if (state.getRestaurantsStatus ==
-                GetRestaurantsStatus.failed) {
+                    GetRestaurantsStatus.failed &&
+                state.restaurants.isEmpty) {
               return MainErrorWidget(
                 size: size,
                 onTap: () {

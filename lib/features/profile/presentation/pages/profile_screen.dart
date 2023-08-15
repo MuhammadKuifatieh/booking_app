@@ -1,5 +1,6 @@
 import 'package:booking_app/core/flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:booking_app/features/customer_booking/presentation/pages/customer_booking_screen.dart';
+import 'package:booking_app/features/favorites/presentation/pages/my_favorites_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/config/app_colors.dart';
@@ -56,7 +57,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             ProfileButton(
               size: size,
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushNamed(MyFavoritesScreen.routeName);
+              },
               title: "Your Favorite",
               svgPath: SvgPaths.favorite,
             ),

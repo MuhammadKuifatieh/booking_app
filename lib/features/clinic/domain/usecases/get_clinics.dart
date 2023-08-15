@@ -14,25 +14,28 @@ class GetClinics implements UseCase<ClinicsResponse, GetClinicsParams> {
 }
 
 class GetClinicsParams with Params {
-  final int page;
-  final int perPage;
+  final int? page;
+  final int? perPage;
+  final String? name;
   final int? cityId;
   final bool? isOpen;
   final int? clinicSpecializationId;
 
   GetClinicsParams({
-    required this.page,
-    required this.perPage,
+    this.page,
+    this.perPage,
+    this.name,
     this.cityId,
     this.isOpen,
     this.clinicSpecializationId,
   });
   @override
   QueryParams getParams() => {
-        "page": page.toString(),
-        "perPage": perPage.toString(),
-        if (cityId != null) "filter[city_id]": cityId.toString(),
+        if (page != null) "page": page.toString(),
+        if (perPage != null) "perPage": perPage.toString(),
+        if (cityId != null && cityId! > 0) "filter[city_id]": cityId.toString(),
         if (isOpen != null) "filter[is_open]": isOpen.toString(),
+        if (name != null && name!.isNotEmpty) "filter[name]": name!,
         if (clinicSpecializationId != null)
           "filter[clinic_specialization_id]": clinicSpecializationId.toString(),
       };

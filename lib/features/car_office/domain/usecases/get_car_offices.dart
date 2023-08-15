@@ -15,23 +15,23 @@ class GetCarOffices
 }
 
 class GetCarOfficesParams with Params {
-  final int page;
-  final int perPage;
+  final int? page;
+  final int? perPage;
   final int? cityId;
   final String? name;
 
   GetCarOfficesParams({
-    required this.page,
-    required this.perPage,
+    this.page,
+    this.perPage,
     this.cityId,
     this.name,
   });
 
   @override
   QueryParams getParams() => {
-        "page": page.toString(),
-        "perPage": perPage.toString(),
-        if (cityId != null) "filter[cityId]": cityId.toString(),
+        if (page != null) "page": page.toString(),
+        if (perPage != null) "perPage": perPage.toString(),
+        if (cityId != null && cityId! > 0) "filter[city_id]": cityId.toString(),
         if (name != null && name!.isNotEmpty) "filter[name]": name!,
       };
 }

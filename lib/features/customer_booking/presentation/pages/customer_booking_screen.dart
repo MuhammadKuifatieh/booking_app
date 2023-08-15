@@ -132,7 +132,7 @@ extension StatusEnumExtention on StatusEnum {
       );
     } else if (this == StatusEnum.reject) {
       return StatusValueClass(
-        status: 2,
+        status: 3,
         value: "Reject",
       );
     }
@@ -140,14 +140,13 @@ extension StatusEnumExtention on StatusEnum {
   }
 
   static String? getByStatus(int value) {
-    if (value == StatusEnum.reject.status!.status) {
-      return StatusEnum.reject.status!.value;
-    } else if (value == StatusEnum.pending.status!.status) {
+    if (value == StatusEnum.pending.status!.status) {
       return StatusEnum.pending.status!.value;
     } else if (value == StatusEnum.accept.status!.status) {
       return StatusEnum.accept.status!.value;
+    } else {
+      return StatusEnum.reject.status!.value;
     }
-    return null;
   }
 }
 
