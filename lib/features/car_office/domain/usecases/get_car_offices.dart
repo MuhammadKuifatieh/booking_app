@@ -18,6 +18,7 @@ class GetCarOfficesParams with Params {
   final int? page;
   final int? perPage;
   final int? cityId;
+  final int? userId;
   final String? name;
 
   GetCarOfficesParams({
@@ -25,6 +26,7 @@ class GetCarOfficesParams with Params {
     this.perPage,
     this.cityId,
     this.name,
+    this.userId,
   });
 
   @override
@@ -33,5 +35,6 @@ class GetCarOfficesParams with Params {
         if (perPage != null) "perPage": perPage.toString(),
         if (cityId != null && cityId! > 0) "filter[city_id]": cityId.toString(),
         if (name != null && name!.isNotEmpty) "filter[name]": name!,
+        if (userId != null) "filter[user_id]": userId.toString(),
       };
 }

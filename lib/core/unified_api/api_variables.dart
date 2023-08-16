@@ -129,24 +129,6 @@ class ApiVariables {
   static Uri toggleFavorite(int modelId, int modelType) => _userUri(
         path: "favorite/$modelType/model/$modelId/modelNumber/assignFavorite",
       );
-  //////////////////////
-  ///Cutsomer Booking///
-  /////////////////////
-  static Uri _customerBooking(String path) => _userUri(
-        path: "$path/booking/customer",
-      );
-
-  static Uri customerCarOfficeBooking() => _customerBooking("carOffice");
-
-  static Uri customerRestaurantBooking() => _customerBooking("restaurant");
-
-  static Uri customerHotelBooking() => _customerBooking("hotel");
-
-  static Uri customerClinicBooking() => _customerBooking("clinic");
-
-  //////////////
-  ///favorite///
-  /////////////
   static Uri _favorite({required String path, QueryParams? params}) => _userUri(
         path: "favorite/$path",
         queryParameters: params,
@@ -171,4 +153,79 @@ class ApiVariables {
         path: "getClinicFavorites",
         params: params,
       );
+
+  //////////////////////
+  ///Cutsomer Booking///
+  /////////////////////
+  static Uri _customerBooking(String path) => _userUri(
+        path: "$path/booking/customer",
+      );
+
+  static Uri customerCarOfficeBooking() => _customerBooking("carOffice");
+
+  static Uri customerRestaurantBooking() => _customerBooking("restaurant");
+
+  static Uri customerHotelBooking() => _customerBooking("hotel");
+
+  static Uri customerClinicBooking() => _customerBooking("clinic");
+
+  ///////////////////
+  ///Owner Booking///
+  //////////////////
+
+  static Uri _restuarantOwner({required String path, QueryParams? params}) =>
+      _userUri(
+        path: "restaurant/booking/owner/restaurantBooking/$path",
+        queryParameters: params,
+      );
+  static Uri getOwnerRestaurantOrder(int restaurantId) =>
+      _userUri(path: "restaurant/booking/owner/restaurant/$restaurantId/index");
+
+  static Uri acceptOwnerRestaurantOrder(int restaurantId) =>
+      _restuarantOwner(path: "$restaurantId/accept");
+
+  static Uri rejectOwnerRestaurantOrder(int restaurantId) =>
+      _restuarantOwner(path: "$restaurantId/reject");
+
+  static Uri _hotelOwner({required String path, QueryParams? params}) =>
+      _userUri(
+        path: "hotel/booking/owner/hotelBooking/$path",
+        queryParameters: params,
+      );
+  static Uri getOwnerHotelOrder(int hotelId) =>
+      _userUri(path: "hotel/booking/owner/hotel/$hotelId/index");
+
+  static Uri acceptOwnerHotelOrder(int hotelId) =>
+      _hotelOwner(path: "$hotelId/accept");
+
+  static Uri rejectOwnerHotelOrder(int hotelId) =>
+      _hotelOwner(path: "$hotelId/reject");
+
+  static Uri _carOfficeOwner({required String path, QueryParams? params}) =>
+      _userUri(
+        path: "carOffice/booking/owner/carBooking/$path",
+        queryParameters: params,
+      );
+  static Uri getOwnerCarOfficeOrder(int carOfficeId) =>
+      _userUri(path: "carOffice/booking/owner/carOffice/$carOfficeId/index");
+
+  static Uri acceptOwnerCarOfficeOrder(int carOfficeId) =>
+      _carOfficeOwner(path: "$carOfficeId/accept");
+
+  static Uri rejectOwnerCarOfficeOrder(int carOfficeId) =>
+      _carOfficeOwner(path: "$carOfficeId/reject");
+
+  static Uri _clinicOwner({required String path, QueryParams? params}) =>
+      _userUri(
+        path: "clinic/booking/owner/clinicBooking/$path",
+        queryParameters: params,
+      );
+  static Uri getOwnerClinicOrder(int clinicId) =>
+      _userUri(path: "clinic/booking/owner/clinic/$clinicId/index");
+
+  static Uri acceptOwnerClinicOrder(int clinicId) =>
+      _clinicOwner(path: "$clinicId/accept");
+
+  static Uri rejectOwnerClinicOrder(int clinicId) =>
+      _clinicOwner(path: "$clinicId/reject");
 }

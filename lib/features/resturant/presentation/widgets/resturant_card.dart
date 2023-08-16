@@ -13,21 +13,24 @@ class RestaurantCard extends StatelessWidget {
     super.key,
     required this.size,
     required this.restaurant,
+    this.onTap,
   });
 
   final Size size;
   final RestaurantModel restaurant;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(
-          RestaurantDetailsScreen.routeName,
-          arguments:
-              RestaurantDetailsScreenParams(restaurantId: restaurant.id!),
-        );
-      },
+      onTap: onTap ??
+          () {
+            Navigator.of(context).pushNamed(
+              RestaurantDetailsScreen.routeName,
+              arguments:
+                  RestaurantDetailsScreenParams(restaurantId: restaurant.id!),
+            );
+          },
       child: Container(
         padding: const EdgeInsets.only(bottom: 15),
         decoration: BoxDecoration(

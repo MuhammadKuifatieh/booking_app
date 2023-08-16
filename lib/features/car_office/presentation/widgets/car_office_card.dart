@@ -13,23 +13,26 @@ class CarOfficeCard extends StatelessWidget {
     super.key,
     required this.size,
     required this.carOffice,
+    this.onTap,
   });
 
   final Size size;
   final CarOfficeModel carOffice;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(
-          CarOfficeDetailsScreen.routeName,
-          arguments: CarOfficeDetailsScreenParams(
-            carOfficeId: carOffice.id!,
-            carOfficeName: carOffice.name!,
-          ),
-        );
-      },
+      onTap: onTap ??
+          () {
+            Navigator.of(context).pushNamed(
+              CarOfficeDetailsScreen.routeName,
+              arguments: CarOfficeDetailsScreenParams(
+                carOfficeId: carOffice.id!,
+                carOfficeName: carOffice.name!,
+              ),
+            );
+          },
       child: Padding(
         padding: EdgeInsets.only(bottom: size.width * .05),
         child: Row(

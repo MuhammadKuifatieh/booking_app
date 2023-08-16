@@ -1,11 +1,10 @@
-import 'package:booking_app/core/constant/svg_paths.dart';
-import 'package:booking_app/features/category/presentation/pages/category_screen.dart';
-import 'package:booking_app/features/home/presentation/pages/home_screen.dart';
-import 'package:booking_app/features/notifcation/presentation/pages/notificaton_screen.dart';
-import 'package:booking_app/features/profile/presentation/pages/profile_screen.dart';
-import 'package:booking_app/features/search/presentation/pages/search_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/constant/svg_paths.dart';
+import '../../../category/presentation/pages/category_screen.dart';
+import '../../../home/presentation/pages/home_screen.dart';
+import '../../../profile/presentation/pages/profile_screen.dart';
+import '../../../search/presentation/pages/search_screen.dart';
 import '../widgets/main_bottom_navigator_bar.dart';
 
 class MainScreen extends StatefulWidget {
@@ -29,7 +28,7 @@ class _MainScreenState extends State<MainScreen> {
     HomeScreen(),
     CategoryScreen(),
     SearchScreen(),
-    NotificationScreen(),
+    // NotificationScreen(),
     ProfileScreen(),
   ];
 
@@ -50,7 +49,7 @@ class _MainScreenState extends State<MainScreen> {
                 SvgPaths.home,
                 SvgPaths.category,
                 SvgPaths.search,
-                SvgPaths.notification,
+                // SvgPaths.notification,
                 SvgPaths.profile,
               ],
             ),

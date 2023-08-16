@@ -95,7 +95,7 @@ class _ShowLocationScreenState extends State<ShowLocationScreen>
               // ),
               Positioned(
                 bottom: 10,
-                right: 8,
+                left: 8,
                 child: Column(
                   children: [
                     InkWell(

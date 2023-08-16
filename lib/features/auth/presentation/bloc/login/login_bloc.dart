@@ -27,7 +27,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           loginStatus: LoginStatus.succ,
         ));
         GlobalFunctions.setToken(r.data!.token!);
-        GlobalFunctions.setUserInfo(r.data!.admin!);
+        GlobalFunctions.setUserId(r.data!.admin!.id!);
       },
     );
   }

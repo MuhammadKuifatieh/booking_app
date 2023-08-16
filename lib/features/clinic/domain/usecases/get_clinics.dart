@@ -19,9 +19,11 @@ class GetClinicsParams with Params {
   final String? name;
   final int? cityId;
   final bool? isOpen;
+  final int? userId;
   final int? clinicSpecializationId;
 
   GetClinicsParams({
+    this.userId,
     this.page,
     this.perPage,
     this.name,
@@ -38,5 +40,6 @@ class GetClinicsParams with Params {
         if (name != null && name!.isNotEmpty) "filter[name]": name!,
         if (clinicSpecializationId != null)
           "filter[clinic_specialization_id]": clinicSpecializationId.toString(),
+        if (userId != null) "filter[user_id]": userId.toString(),
       };
 }

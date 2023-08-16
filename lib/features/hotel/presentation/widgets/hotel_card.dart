@@ -14,21 +14,24 @@ class HotelCard extends StatelessWidget {
     this.inHome = false,
     required this.size,
     required this.hotel,
+    this.onTap,
   });
 
   final Size size;
   final HotelModel hotel;
   final bool inHome;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(
-          HotelDetailsScreen.routeName,
-          arguments: HotelDetailsScreenParams(hotelId: hotel.id!),
-        );
-      },
+      onTap: onTap ??
+          () {
+            Navigator.of(context).pushNamed(
+              HotelDetailsScreen.routeName,
+              arguments: HotelDetailsScreenParams(hotelId: hotel.id!),
+            );
+          },
       child: Container(
         padding: inHome ? EdgeInsets.zero : const EdgeInsets.only(bottom: 15),
         decoration: BoxDecoration(

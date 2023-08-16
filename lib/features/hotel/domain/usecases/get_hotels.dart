@@ -19,12 +19,14 @@ class GetHotelsParams with Params {
   final int? perPage;
   final String? name;
   final int? cityId;
+  final int? userId;
 
   GetHotelsParams({
     this.page,
     this.perPage,
     this.name,
     this.cityId,
+    this.userId,
   });
 
   @override
@@ -34,6 +36,7 @@ class GetHotelsParams with Params {
       if (perPage != null) "perPage": perPage.toString(),
       if (name != null && name!.isNotEmpty) "filter[name]": name!,
       if (cityId != null && cityId! > 0) "filter[city_id]": cityId.toString(),
+      if (userId != null) "filter[user_id]": userId.toString(),
     };
   }
 }

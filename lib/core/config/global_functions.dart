@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constant/perf_keys.dart';
-import '../models/user_model.dart';
 
 class GlobalFunctions {
   GlobalFunctions._();
@@ -23,24 +20,23 @@ class GlobalFunctions {
     pref.setString(PrefKeys.token, token);
   }
 
-  static Future<void> removeToken(String token) async {
+  static Future<void> removeToken() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.remove(PrefKeys.token);
   }
 
-  static Future<UserModel> getUserInfo() async {
+  static Future<int> getUserId() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    final user =
-        UserModel.fromJson(json.decode(pref.getString(PrefKeys.user)!));
+    final user = pref.getInt(PrefKeys.user)!;
     return user;
   }
 
-  static Future<void> setUserInfo(UserModel user) async {
+  static Future<void> setUserId(int userId) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setString(PrefKeys.user, user.toJson().toString());
+    pref.setInt(PrefKeys.user, userId);
   }
 
-  static Future<void> removeUserInfo(String token) async {
+  static Future<void> removeUserId() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.remove(PrefKeys.user);
   }
@@ -53,5 +49,10 @@ class GlobalFunctions {
   static Future<void> setShowOnBoarder() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setBool(PrefKeys.isShowOnBorder, true);
+  }
+
+  static Future<void> logout() async {
+    await removeToken();
+    await removeUserId();
   }
 }

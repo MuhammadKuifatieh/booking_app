@@ -160,6 +160,7 @@ class ListCardsCarOffice extends StatelessWidget {
     required this.isLoading,
     required this.isFailed,
     required this.onTapRetry,
+    this.onTapCard,
   });
 
   final Size size;
@@ -167,6 +168,7 @@ class ListCardsCarOffice extends StatelessWidget {
   final bool isLoading;
   final bool isFailed;
   final VoidCallback onTapRetry;
+  final void Function(int)? onTapCard;
 
   @override
   Widget build(BuildContext context) {
@@ -188,6 +190,11 @@ class ListCardsCarOffice extends StatelessWidget {
         return CarOfficeCard(
           size: size,
           carOffice: carOffices[index],
+          onTap: onTapCard != null
+              ? () {
+                  onTapCard!(carOffices[index].id!);
+                }
+              : null,
         );
       },
     );
@@ -202,6 +209,7 @@ class ListCardsClinic extends StatelessWidget {
     required this.isLoading,
     required this.isFailed,
     required this.onTapRetry,
+    this.onTapCard,
   });
 
   final Size size;
@@ -209,6 +217,7 @@ class ListCardsClinic extends StatelessWidget {
   final bool isLoading;
   final bool isFailed;
   final VoidCallback onTapRetry;
+  final void Function(int)? onTapCard;
 
   @override
   Widget build(BuildContext context) {
@@ -230,6 +239,11 @@ class ListCardsClinic extends StatelessWidget {
         return ClinicCard(
           size: size,
           clinic: clinics[index],
+          onTap: onTapCard != null
+              ? () {
+                  onTapCard!(clinics[index].id!);
+                }
+              : null,
         );
       },
     );
@@ -244,6 +258,7 @@ class ListCardsHotel extends StatelessWidget {
     required this.isLoading,
     required this.isFailed,
     required this.onTapRetry,
+    this.onTapCard,
   });
 
   final Size size;
@@ -251,6 +266,7 @@ class ListCardsHotel extends StatelessWidget {
   final bool isLoading;
   final bool isFailed;
   final VoidCallback onTapRetry;
+  final void Function(int)? onTapCard;
 
   @override
   Widget build(BuildContext context) {
@@ -272,6 +288,11 @@ class ListCardsHotel extends StatelessWidget {
         return HotelCard(
           size: size,
           hotel: hotels[index],
+          onTap: onTapCard != null
+              ? () {
+                  onTapCard!(hotels[index].id!);
+                }
+              : null,
         );
       },
     );
@@ -286,6 +307,7 @@ class ListCardsResturant extends StatelessWidget {
     required this.isLoading,
     required this.isFailed,
     required this.onTapRetry,
+    this.onTapCard,
   });
 
   final Size size;
@@ -293,6 +315,7 @@ class ListCardsResturant extends StatelessWidget {
   final bool isLoading;
   final bool isFailed;
   final VoidCallback onTapRetry;
+  final void Function(int)? onTapCard;
 
   @override
   Widget build(BuildContext context) {
@@ -314,6 +337,11 @@ class ListCardsResturant extends StatelessWidget {
         return RestaurantCard(
           size: size,
           restaurant: restaurants[index],
+          onTap: onTapCard != null
+              ? () {
+                  onTapCard!(restaurants[index].id!);
+                }
+              : null,
         );
       },
     );

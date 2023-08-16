@@ -24,7 +24,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       (r) {
         emit(state.copyWith(registerStatus: RegisterStatus.succ));
         GlobalFunctions.setToken(r.data!.token!);
-        GlobalFunctions.setUserInfo(r.data!.admin!);
+        GlobalFunctions.setUserId(r.data!.admin!.id!);
       },
     );
   }

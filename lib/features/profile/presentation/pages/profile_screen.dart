@@ -1,12 +1,16 @@
-import 'package:booking_app/core/flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:booking_app/features/customer_booking/presentation/pages/customer_booking_screen.dart';
-import 'package:booking_app/features/favorites/presentation/pages/my_favorites_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/config/app_colors.dart';
 import '../../../../core/config/app_text_styles.dart';
+import '../../../../core/config/global_functions.dart';
 import '../../../../core/constant/svg_paths.dart';
+import '../../../../core/extensions/gradian.dart';
+import '../../../../core/flutter_neumorphic/flutter_neumorphic.dart';
 import '../../../../core/presentation/widgets/network_image.dart';
+import '../../../customer_booking/presentation/pages/customer_booking_screen.dart';
+import '../../../favorites/presentation/pages/my_favorites_screen.dart';
+import '../../../owner_booking/presentation/pages/my_places_screen.dart';
+import '../../../splash/presentation/pages/splash_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const String routeName = "profile_screen";
@@ -41,13 +45,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       width: size.width * .15,
                       height: size.width * .15,
                       imageUrl:
-                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpIoI76wjvQ2pq6t25TLmRAwTxv118OFKZxykoCiY_fWRtR8QRr1nWWcDtG3tHdgCuWu8&usqp=CAU",
+                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqvxdjR8ZWAokr85824NMScMNQ5I9K6x7GT2WZnRTGAA&s",
                       shape: BoxShape.circle,
                     ),
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    "Jane Doe",
+                    "My Profile",
                     style: AppTextStyles.styleWeight900(
                       fontSize: size.width * .065,
                     ),
@@ -72,23 +76,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
               },
               svgPath: SvgPaths.payment,
             ),
+            // ProfileButton(
+            //   size: size,
+            //   title: "Help",
+            //   onTap: () {},
+            //   svgPath: SvgPaths.help,
+            // ),
             ProfileButton(
               size: size,
-              title: "Help",
-              onTap: () {},
-              svgPath: SvgPaths.help,
-            ),
-            ProfileButton(
-              size: size,
-              title: "Promotions",
-              onTap: () {},
+              title: "My Places",
+              onTap: () {
+                Navigator.of(context).pushNamed(MyPlacesScreen.routeName);
+              },
               svgPath: SvgPaths.promotions,
             ),
             ProfileButton(
               size: size,
-              title: "Setting",
-              onTap: () {},
-              svgPath: SvgPaths.setting,
+              title: "Logout",
+              onTap: () async {
+                await GlobalFunctions.logout();
+                if (mounted) {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    SplashScreen.routeName,
+                    (route) => false,
+                  );
+                }
+              },
+              child: Icon(
+                Icons.logout_outlined,
+                size: size.width * .06,
+              ).gradient(),
             ),
           ],
         ),
@@ -103,13 +120,15 @@ class ProfileButton extends StatelessWidget {
     required this.size,
     required this.title,
     required this.onTap,
-    required this.svgPath,
+    this.svgPath,
+    this.child,
   });
 
   final Size size;
   final String title;
-  final String svgPath;
+  final String? svgPath;
   final VoidCallback onTap;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
@@ -122,10 +141,12 @@ class ProfileButton extends StatelessWidget {
             SizedBox(
               width: size.width * .065,
             ),
-            SvgPicture.asset(
-              svgPath,
-              width: size.width * .06,
-            ),
+            (child != null)
+                ? child!
+                : SvgPicture.asset(
+                    svgPath!,
+                    width: size.width * .06,
+                  ),
             const SizedBox(width: 20),
             Text(
               title,

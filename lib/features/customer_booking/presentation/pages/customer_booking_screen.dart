@@ -1,6 +1,3 @@
-import 'package:booking_app/features/customer_booking/presentation/widgets/clinic_list_widget.dart';
-import 'package:booking_app/features/customer_booking/presentation/widgets/hotel_list_widget.dart';
-import 'package:booking_app/features/customer_booking/presentation/widgets/restaurant_list_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/config/app_colors.dart';
@@ -9,6 +6,9 @@ import '../../../../core/flutter_neumorphic/flutter_neumorphic.dart';
 import '../../../../core/presentation/widgets/main_app_bar.dart';
 import '../customer_booking/customer_booking_bloc.dart';
 import '../widgets/car_office_list_widget.dart';
+import '../widgets/clinic_list_widget.dart';
+import '../widgets/hotel_list_widget.dart';
+import '../widgets/restaurant_list_widget.dart';
 
 class CustomerBookingScreen extends StatefulWidget {
   static const routeName = "customer_booking";

@@ -2,6 +2,11 @@ import 'package:booking_app/core/presentation/pages/map_pick_location.dart';
 import 'package:booking_app/features/car_office/presentation/pages/car_office_details_screen.dart';
 import 'package:booking_app/features/customer_booking/presentation/pages/customer_booking_screen.dart';
 import 'package:booking_app/features/favorites/presentation/pages/my_favorites_screen.dart';
+import 'package:booking_app/features/owner_booking/presentation/pages/my_car_office_screen.dart';
+import 'package:booking_app/features/owner_booking/presentation/pages/my_clinic_screen.dart';
+import 'package:booking_app/features/owner_booking/presentation/pages/my_hotels_screen.dart';
+import 'package:booking_app/features/owner_booking/presentation/pages/my_places_screen.dart';
+import 'package:booking_app/features/owner_booking/presentation/pages/my_restaurant_screen.dart';
 import 'package:booking_app/features/search/presentation/pages/show_location_screen.dart';
 import 'package:booking_app/features/splash/presentation/pages/on_boarder_screen.dart';
 import 'package:flutter/material.dart';
@@ -156,6 +161,39 @@ class AppRouter {
       case MyFavoritesScreen.routeName:
         return MaterialPageRoute(
           builder: (_) => const MyFavoritesScreen(),
+          settings: routeSettings,
+        );
+      case MyPlacesScreen.routeName:
+        return MaterialPageRoute(
+          builder: (_) => const MyPlacesScreen(),
+          settings: routeSettings,
+        );
+      case MyRestaurantScreen.routeName:
+        return MaterialPageRoute(
+          builder: (_) => MyRestaurantScreen(
+            arg: routeSettings.arguments as MyRestaurantScreenParans,
+          ),
+          settings: routeSettings,
+        );
+      case MyCarOfficeScreen.routeName:
+        return MaterialPageRoute(
+          builder: (_) => MyCarOfficeScreen(
+            arg: routeSettings.arguments as MyCarOfficeScreenParams,
+          ),
+          settings: routeSettings,
+        );
+      case MyClinicScreen.routeName:
+        return MaterialPageRoute(
+          builder: (_) => MyClinicScreen(
+            arg: routeSettings.arguments as MyClinicScreenParams,
+          ),
+          settings: routeSettings,
+        );
+      case MyHotelScreen.routeName:
+        return MaterialPageRoute(
+          builder: (_) => MyHotelScreen(
+            arg: routeSettings.arguments as MyHotelScreenParams,
+          ),
           settings: routeSettings,
         );
     }

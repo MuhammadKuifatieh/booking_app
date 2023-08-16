@@ -49,8 +49,8 @@ class PlaceContactModel {
         id: json["id"],
         address: json["address"],
         phoneNumber: json["phone_number"],
-        latitude: json["latitude"],
-        longitude: json["longitude"],
+        latitude: json["latitude"].toString(),
+        longitude: json["longitude"].toString(),
         isOpen: json["is_open"],
         openAt:
             json["open_at"] == null ? null : DateTime.parse(json["open_at"]),

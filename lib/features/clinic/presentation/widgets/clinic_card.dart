@@ -14,21 +14,24 @@ class ClinicCard extends StatelessWidget {
     this.inHome = false,
     required this.size,
     required this.clinic,
+    this.onTap,
   });
 
   final Size size;
   final bool inHome;
   final ClinicModel clinic;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(ClinicDetailsScreen.routeName,
-            arguments: ClinicDetailsScreenParams(
-              clinicId: clinic.id!,
-            ));
-      },
+      onTap: onTap ??
+          () {
+            Navigator.of(context).pushNamed(ClinicDetailsScreen.routeName,
+                arguments: ClinicDetailsScreenParams(
+                  clinicId: clinic.id!,
+                ));
+          },
       child: Padding(
         padding: EdgeInsets.only(bottom: size.width * .05),
         child: Row(
